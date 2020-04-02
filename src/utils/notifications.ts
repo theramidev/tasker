@@ -2,9 +2,7 @@ import Notification from 'react-native-push-notification';
 
 Notification.configure({
     onRegister: (token) => console.log('[notification.ts line 4]: ', token),
-    onNotification: (notification) => console.log('[notification.ts line 5]: ', notification),
-    senderID: 'my id'
-
+    onNotification: (notification) => console.log('[notification.ts line 5]: ', notification)
 });
 
 export default () => {
@@ -12,7 +10,7 @@ export default () => {
 
     Notification.checkPermissions((permissions) => console.log(permissions));
 
-    Notification.localNotificationSchedule({
+    Notification.localNotification({
         // subText: 'Texto secundario',
         // tag: '#mytag',
         // ongoing: true,
@@ -24,6 +22,6 @@ export default () => {
         // playSound: true,
         // repeatType: 'day',
         // soundName: 'default',
-        date: new Date(Date.now() + 20 * 1000)
+        // date: new Date(Date.now() + 20 * 1000)
     })
 }
