@@ -301,7 +301,7 @@ temp/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-*.keystore
+tasker.keystore
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
