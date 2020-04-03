@@ -8,7 +8,8 @@ const Routes = createStackNavigator(
         Home: HomeScreen
     },
     {
-        initialRouteName: 'Home'
+        initialRouteName: 'Home',
+        headerMode: 'none'
     }
 );
 

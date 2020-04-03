@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-view';
-import NotificationManager from 'react-native-check-notification-enable';
+// import NotificationManager from 'react-native-check-notification-enable';
 
 import { Provider, store } from './store';
 
@@ -20,7 +19,6 @@ const App = () => {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <StatusBar barStyle="dark-content" />
         <Routes />
       </SafeAreaProvider>
     </Provider>

@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Layout } from '../../components/Layout';
+import { Header } from '../../components/Header';
+import { IProps } from './interfaces/IProps';
 
-class HomeScreen extends Component<{}, {}> {
+class HomeScreen extends Component<IProps, {}> {
 
     render() {
         return(
-            <>
-                <Text>
-                    HomeScreen
-                </Text>
-                <Icon name="person" size={30} color="black" />
-            </>
+            <Layout>
+                <Header 
+                    navigation={this.props.navigation}
+                    title="Tasker"
+                    mode="none"
+                />
+            </Layout>
         )
     }
 }
