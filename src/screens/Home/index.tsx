@@ -6,8 +6,11 @@ import {FloatingAction} from 'react-native-floating-action';
 
 import {styles} from './styles';
 import {ListOfNotes} from '../../Components/ListOfNotes';
+import {Layout} from '../../Components/Layout';
+import {Header} from '../../Components/Header';
+import {IProps} from './interfaces/IProps';
 
-class HomeScreen extends Component<{}, {}> {
+class HomeScreen extends Component<IProps, {}> {
   render() {
     const options = [
       {
@@ -19,16 +22,23 @@ class HomeScreen extends Component<{}, {}> {
     ];
 
     return (
-      <View style={styles.container}>
-        <ListOfNotes />
-        <FloatingAction
-          actions={options}
-          onPressItem={(name) => {
-            console.log(`selected button: ${name}`);
-          }}
-          animated={!__DEV__}
+      <Layout>
+        <Header 
+          navigation={this.props.navigation}
+          title="Tasker"
+          mode="none"
         />
-      </View>
+        <View style={styles.container}>
+          <ListOfNotes />
+          <FloatingAction
+            actions={options}
+            onPressItem={(name) => {
+              console.log(`selected button: ${name}`);
+            }}
+            animated={!__DEV__}
+          />
+        </View>
+      </Layout>
     );
   }
 }

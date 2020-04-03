@@ -7,12 +7,13 @@ import {
 import HomeScreen from './screens/Home';
 
 const Routes = createStackNavigator(
-  {
-    Home: HomeScreen,
-  },
-  {
-    initialRouteName: 'Home',
-  },
+    {
+        Home: HomeScreen
+    },
+    {
+        initialRouteName: 'Home',
+        headerMode: 'none'
+    }
 );
 
 export default createAppContainer(Routes);
