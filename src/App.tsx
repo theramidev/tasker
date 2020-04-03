@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-view';
 // import NotificationManager from 'react-native-check-notification-enable';
+import SplashScreen from 'react-native-splash-screen';
 
 import { Provider, store } from './store';
 
@@ -14,6 +15,8 @@ const App = () => {
     // .then((settings: any) => {
     //   console.log(settings);
     // })
+
+    SplashScreen.hide();
   }, []);
 
   return (
