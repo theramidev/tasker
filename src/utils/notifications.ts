@@ -2,26 +2,31 @@ import Notification from 'react-native-push-notification';
 
 Notification.configure({
     onRegister: (token) => console.log('[notification.ts line 4]: ', token),
-    onNotification: (notification) => console.log('[notification.ts line 5]: ', notification)
+    onNotification: (notification: any) => {
+        // console.log('[notification.ts line 6]: ', notification);
+    }
 });
 
-export default () => {
-    console.log('Hola');
+export default (
+    subText: string,
+    tag: string,
+    title: string,
+    message: string,
+    date: Date
+) => {
 
-    Notification.checkPermissions((permissions) => console.log(permissions));
-
-    Notification.localNotification({
-        // subText: 'Texto secundario',
-        // tag: '#mytag',
-        // ongoing: true,
-        // visibility: 'public',
-        // importance: 'high',
-        // priority: 'high',
-        // title: 'Nombre del título',
-        message: 'mensaje de la notificación',
-        // playSound: true,
-        // repeatType: 'day',
-        // soundName: 'default',
-        // date: new Date(Date.now() + 20 * 1000)
+    Notification.localNotificationSchedule({
+        subText,
+        tag,
+        ongoing: false,
+        visibility: 'private',
+        importance: 'high',
+        priority: 'high',
+        title,
+        message,
+        playSound: true,
+        soundName: 'default',
+        autoCancel: true,
+        date
     })
 }
