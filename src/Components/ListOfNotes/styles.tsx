@@ -16,6 +16,15 @@ export const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: theme().light,
   },
+  icons: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  icon: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   title: {
     fontWeight: "bold",
     fontSize: 17,
