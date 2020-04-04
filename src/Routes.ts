@@ -5,15 +5,19 @@ import {
 } from 'react-navigation-stack';
 
 import HomeScreen from './screens/Home';
+import RegisterNoteScreen from './screens/RegisterNote';
 
 const Routes = createStackNavigator(
-    {
-        Home: HomeScreen
-    },
-    {
-        initialRouteName: 'Home',
-        headerMode: 'none'
+  {
+    Home: HomeScreen,
+    RegisterNote: {
+        screen: RegisterNoteScreen,
     }
+  },
+  {
+    initialRouteName: 'Home',
+    headerMode: 'none',
+  },
 );
 
 export default createAppContainer(Routes);

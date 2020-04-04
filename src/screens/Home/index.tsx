@@ -11,11 +11,22 @@ import {Header} from '../../Components/Header';
 import {IProps} from './interfaces/IProps';
 
 class HomeScreen extends Component<IProps, {}> {
+  goTo = (name: string) => {
+    switch (name) {
+      case 'RegisterNote':
+        this.props.navigation.navigate(name);
+        break;
+    
+      default:
+        break;
+    }
+  };
+
   render() {
     const options = [
       {
         text: 'Agregar nota',
-        name: 'newNote',
+        name: 'RegisterNote',
         position: 4,
         icon: require('../../assets/icons/note.png'),
       },
@@ -35,9 +46,8 @@ class HomeScreen extends Component<IProps, {}> {
         </Layout>
         <FloatingAction
           actions={options}
-          onPressItem={(name) => {
-            console.log(`selected button: ${name}`);
-          }}
+          // @ts-ignore
+          onPressItem={this.goTo}
           animated={!__DEV__}
         />
       </Fragment>
