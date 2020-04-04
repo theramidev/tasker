@@ -9,8 +9,11 @@ import {ListOfNotes} from '../../Components/ListOfNotes';
 import {Layout} from '../../Components/Layout';
 import {Header} from '../../Components/Header';
 import {IProps} from './interfaces/IProps';
+import { IState } from './interfaces/IState';
 
-class HomeScreen extends Component<IProps, {}> {
+
+class HomeScreen extends Component<IProps, IState> {
+
   goTo = (name: string) => {
     switch (name) {
       case 'RegisterNote':
@@ -35,14 +38,14 @@ class HomeScreen extends Component<IProps, {}> {
     return (
       <Fragment>
         <Layout>
-          <Header
-            navigation={this.props.navigation}
-            title="Tasker"
-            mode="none"
-          />
-          <View style={styles.container}>
-            <ListOfNotes />
-          </View>
+        <Header 
+          navigation={this.props.navigation}
+          title="Tasker"
+          mode="menu"
+        />
+        <View style={styles.container}>
+          <ListOfNotes />
+        </View>
         </Layout>
         <FloatingAction
           actions={options}

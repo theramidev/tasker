@@ -1,25 +1,48 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { Easing } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-view';
+// import NotificationManager from 'react-native-check-notification-enable';
+import SplashScreen from 'react-native-splash-screen';
+import Orientation from 'react-native-orientation-locker';
+import Drawer from 'react-native-drawer-menu';
 import {StatusBar} from 'react-native';
-import {SafeAreaProvider} from 'react-native-safe-area-view';
 
 import {Provider, store} from './store';
 
 import Routes from './Routes';
+import { Menu } from './components/Menu';
+import { MenuContext } from './MenuContext';
 
 const App = () => {
+  const { setRef } = useContext(MenuContext);
 
   useEffect(() => {
+    Orientation.lockToPortrait();
+
     // Para verificar loas notifications settings
     // NotificationManager.retrieveGlobalNotificationSettings()
     // .then((settings: any) => {
     //   console.log(settings);
     // })
+
+    SplashScreen.hide();
   }, []);
 
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <Routes />
+        <Drawer 
+          type={Drawer.types.Overlay}
+          drawerContent={<Menu />}
+          easingFunc={Easing.ease}
+          ref={(ref: any) => {
+            if (setRef) {
+              setRef(ref)
+            }
+          }}
+        >
+          <Routes />
+        </Drawer>
       </SafeAreaProvider>
     </Provider>
   );
