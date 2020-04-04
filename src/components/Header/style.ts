@@ -5,8 +5,9 @@ export const styles = StyleSheet.create({
     container: {
         paddingRight: 10,
         flexDirection: 'row',
-        height: 60,
-        backgroundColor: theme().primary
+        height: 85,
+        backgroundColor: theme().primary,
+        paddingTop: 25
     },
     left: {
         flexDirection: 'row',
