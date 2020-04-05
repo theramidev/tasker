@@ -12,8 +12,6 @@ import { MenuContext } from '../../MenuContext';
 export const Header: FC<IProps> = ({title, mode = 'back', navigation, iconLibrary, iconName, onPress}) => {
     const { menuRef } = useContext(MenuContext);
 
-    console.log(menuRef);
-
     return(
         <>
             <StatusBar barStyle="light-content" translucent={true} backgroundColor="transparent" />

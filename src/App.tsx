@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Easing } from 'react-native';
+import { Easing, YellowBox } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-view';
 // import NotificationManager from 'react-native-check-notification-enable';
 import SplashScreen from 'react-native-splash-screen';
@@ -12,9 +12,12 @@ import Routes from './Routes';
 import { Menu } from './components/Menu';
 import { MenuContext } from './MenuContext';
 
+
+
 const App = () => {
   const { setRef } = useContext(MenuContext);
-
+  // Necesario para ignorar este warning
+  YellowBox.ignoreWarnings(['Calling `getNode()`']);
   useEffect(() => {
     Orientation.lockToPortrait();
 
