@@ -37,6 +37,7 @@ const App = () => {
           type={Drawer.types.Overlay}
           drawerContent={<Menu />}
           easingFunc={Easing.ease}
+          duration={300}
           ref={(ref: any) => {
             if (setRef) {
               setRef(ref)

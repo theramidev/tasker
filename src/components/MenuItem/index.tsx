@@ -8,7 +8,7 @@ import Collapsible from 'react-native-collapsible';
 import { Layout } from '../Layout';
 
 
-export const MenuItem: FC<IProps> = ({title, icon, index}) => {
+export const MenuItem: FC<IProps> = ({title, icon, index, isSelected, onSelect, id}) => {
     const [isCollapse, setCollapse] = useState<boolean>(true);
 
     const tags = [
@@ -33,8 +33,9 @@ export const MenuItem: FC<IProps> = ({title, icon, index}) => {
                 <Ripple
                     rippleColor="rgb(60, 60, 60)"
                     rippleDuration={500}
+                    onPress={() => onSelect(id)}
                 >
-                    <View style={style.container}>
+                    <View style={[style.container, {backgroundColor: isSelected ? 'rgba(100, 100, 100, .2)' : 'white'}]}>
                         {icon}
                         <Text style={style.title}>
                             {title}
@@ -45,9 +46,12 @@ export const MenuItem: FC<IProps> = ({title, icon, index}) => {
                     <Ripple
                         rippleColor="rgb(60, 60, 60)"
                         rippleDuration={500}
-                        onPress={() => setCollapse(!isCollapse)}
+                        onPress={() => {
+                            setCollapse(!isCollapse);
+                            onSelect(id);
+                        }}
                     >
-                        <View style={style.container}>
+                        <View style={[style.container, {backgroundColor: isSelected ? 'rgba(60, 60, 60, .3)' : 'white'}]}>
                             {icon}
                             <Text style={style.title}>
                                 {title}

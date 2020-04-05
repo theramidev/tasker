@@ -10,7 +10,7 @@ export default StyleSheet.create({
         height: 150,
         justifyContent: 'space-around',
         paddingHorizontal: 15,
-        paddingTop: 10,
+        paddingTop: 30,
         paddingBottom: 15,
         flexDirection: 'row',
         alignItems: 'center'
