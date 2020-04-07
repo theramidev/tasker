@@ -1,3 +1,4 @@
+import { DeviceEventEmitter } from 'react-native';
 import Notification from 'react-native-push-notification';
 
 Notification.configure({
@@ -15,7 +16,7 @@ export default (
     message: string,
     date: Date,
     color: string = 'white',
-
+    soundName: string = 'default'
 ) => {
 
     Notification.localNotificationSchedule({
@@ -29,7 +30,7 @@ export default (
         title,
         message,
         playSound: true,
-        soundName: 'default',
+        soundName,
         autoCancel: true,
         date,
         color,

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Easing, YellowBox } from 'react-native';
+import { Easing, YellowBox, DeviceEventEmitter } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-view';
 // import NotificationManager from 'react-native-check-notification-enable';
 import SplashScreen from 'react-native-splash-screen';
