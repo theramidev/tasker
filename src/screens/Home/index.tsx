@@ -11,7 +11,14 @@ import Notification from '../../utils/notifications';
 class HomeScreen extends Component<IProps, IState> {
 
     notification = () => {
-        Notification();
+        Notification(
+            1,
+            'Sub Text',
+            '#tag',
+            'Title',
+            'Message',
+            new Date(Date.now() + 10 * 1000)
+        );
     }
 
     render() {

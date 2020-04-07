@@ -8,14 +8,18 @@ Notification.configure({
 });
 
 export default (
+    noteId: number,
     subText: string,
     tag: string,
     title: string,
     message: string,
-    date: Date
+    date: Date,
+    color: string = 'white',
+
 ) => {
 
     Notification.localNotificationSchedule({
+        id: String(noteId),
         subText,
         tag,
         ongoing: false,
@@ -27,6 +31,9 @@ export default (
         playSound: true,
         soundName: 'default',
         autoCancel: true,
-        date
+        date,
+        color,
+        vibrate: true,
+        vibration: 2000
     })
 }
