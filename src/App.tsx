@@ -11,7 +11,7 @@ import { Provider, store } from './store';
 import Routes from './Routes';
 import { Menu } from './components/Menu';
 import { MenuContext } from './MenuContext';
-
+import Database from './Database';
 
 
 const App = () => {
@@ -21,11 +21,15 @@ const App = () => {
   useEffect(() => {
     Orientation.lockToPortrait();
 
+    // Open Database
+    Database.open();
+
     // Para verificar loas notifications settings
     // NotificationManager.retrieveGlobalNotificationSettings()
     // .then((settings: any) => {
     //   console.log(settings);
     // })
+
 
     SplashScreen.hide();
   }, []);
