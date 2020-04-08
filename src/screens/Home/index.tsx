@@ -12,7 +12,7 @@ class HomeScreen extends Component<IProps, IState> {
 
     notification = () => {
         Notification(
-            1,
+            2,
             'Sub Text',
             '#tag',
             'Title',

@@ -1,11 +1,18 @@
-import { DeviceEventEmitter } from 'react-native';
 import Notification from 'react-native-push-notification';
 
 Notification.configure({
     onRegister: (token) => console.log('[notification.ts line 4]: ', token),
     onNotification: (notification: any) => {
-        // console.log('[notification.ts line 6]: ', notification);
-    }
+        console.log('[notification.ts line 6]: ', notification);
+    },
+    permissions: {
+        alert: true,
+        badge: true,
+        sound: true
+    },
+    popInitialNotification: true,
+    requestPermissions: true,
+
 });
 
 export default (
@@ -35,6 +42,6 @@ export default (
         date,
         color,
         vibrate: true,
-        vibration: 2000
+        vibration: 1500
     })
 }
