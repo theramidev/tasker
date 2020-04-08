@@ -9,6 +9,7 @@ class DatabaseInitialization {
 
     private createTables(transaction: Transaction): void {
         // transaction.executeSql(`DROP TABLE IF EXISTS note`);
+        // transaction.executeSql(`DROP TABLE IF EXISTS note_complement`);
 
         // note table
         transaction.executeSql(
@@ -17,9 +18,9 @@ class DatabaseInitialization {
                 title TEXT NOT NULL,
                 message TEXT NOT NULL,
                 tag TEXT,
-                color TEXT NOT NULL DEFAULT '#FFFFFF',
-                isFavorite INTEGER NOT NULL DEFAULT 0,
-                isFixed INTEGER NOT NULL DEFAULT 0,
+                color TEXT,
+                isFavorite INTEGER NOT NULL,
+                isFixed INTEGER NOT NULL,
                 date_reminder INTEGER,
                 date_update INTEGER NOT NULL,
                 date_register INTEGER NOT NULL
@@ -29,7 +30,7 @@ class DatabaseInitialization {
         //note complement
         transaction.executeSql(
             `CREATE TABLE IF NOT EXISTS note_complement(
-                id INTEGER PRYMARY KEY NOT NULL,
+                id INTEGER PRYMARY KEY,
                 note_id INTEGER NOT NULL,
                 type TEXT NOT NULL,
                 path TEXT NOT NULL,

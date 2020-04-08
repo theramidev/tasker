@@ -6,7 +6,7 @@ class Database implements IDatabase {
     private database: SQLiteDatabase | undefined;
     private dbName: string = 'db_tasker';
 
-    public static sentence(statement: string, params: any[] | undefined = undefined): Promise<ResultSet> {
+    public sentence(statement: string, params: any[] | undefined = undefined): Promise<ResultSet> {
         return new Promise(async (resolve, reject) => {
             try {
                 // @ts-ignore
