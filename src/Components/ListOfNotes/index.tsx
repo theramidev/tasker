@@ -106,7 +106,7 @@ export const ListOfNotes: FC = () => {
   );
 
   return (
-    <ScrollView style={{marginBottom: 60}}>
+    <ScrollView style={{marginBottom: 90}}>
       <View
         style={{
           flexDirection: 'row',

@@ -11,7 +11,8 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
     paddingHorizontal: 10,
     marginHorizontal: 10,
-    marginBottom: 20,
+    marginBottom: 10,
+    backgroundColor: theme(0.05).text,
   },
   label: {
     color: theme().text,

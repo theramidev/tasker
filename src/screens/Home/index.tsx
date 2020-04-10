@@ -5,21 +5,19 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {FloatingAction} from 'react-native-floating-action';
 
 import {styles} from './styles';
-import {ListOfNotes} from '../../Components/ListOfNotes';
-import {Layout} from '../../Components/Layout';
-import {Header} from '../../Components/Header';
+import {ListOfNotes} from '../../components/ListOfNotes';
+import {Layout} from '../../components/Layout';
+import {Header} from '../../components/Header';
 import {IProps} from './interfaces/IProps';
-import { IState } from './interfaces/IState';
-
+import {IState} from './interfaces/IState';
 
 class HomeScreen extends Component<IProps, IState> {
-
   goTo = (name: string) => {
     switch (name) {
       case 'RegisterNote':
         this.props.navigation.navigate(name);
         break;
-    
+
       default:
         break;
     }
@@ -38,14 +36,14 @@ class HomeScreen extends Component<IProps, IState> {
     return (
       <Fragment>
         <Layout>
-        <Header 
-          navigation={this.props.navigation}
-          title="Tasker"
-          mode="menu"
-        />
-        <View style={styles.container}>
-          <ListOfNotes />
-        </View>
+          <Header
+            navigation={this.props.navigation}
+            title="Tasker"
+            mode="menu"
+          />
+          <View style={styles.container}>
+            <ListOfNotes />
+          </View>
         </Layout>
         <FloatingAction
           actions={options}

@@ -1,6 +1,6 @@
-import React, { useEffect, useContext } from 'react';
-import { Easing } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-view';
+import React, {useEffect, useContext} from 'react';
+import {Easing} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-view';
 // import NotificationManager from 'react-native-check-notification-enable';
 import SplashScreen from 'react-native-splash-screen';
 import Orientation from 'react-native-orientation-locker';
@@ -10,11 +10,11 @@ import {StatusBar} from 'react-native';
 import {Provider, store} from './store';
 
 import Routes from './Routes';
-import { Menu } from './components/Menu';
-import { MenuContext } from './MenuContext';
+import {MenuContext} from './MenuContext';
+import {Menu} from './components/Menu';
 
 const App = () => {
-  const { setRef } = useContext(MenuContext);
+  const {setRef} = useContext(MenuContext);
 
   useEffect(() => {
     Orientation.lockToPortrait();
@@ -31,16 +31,15 @@ const App = () => {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <Drawer 
+        <Drawer
           type={Drawer.types.Overlay}
           drawerContent={<Menu />}
           easingFunc={Easing.ease}
           ref={(ref: any) => {
             if (setRef) {
-              setRef(ref)
+              setRef(ref);
             }
-          }}
-        >
+          }}>
           <Routes />
         </Drawer>
       </SafeAreaProvider>
