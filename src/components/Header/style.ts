@@ -19,6 +19,13 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center'
     },
+    textIcon: {
+        color: theme().light,
+        marginRight: 4,
+        fontWeight: 'bold',
+        fontSize: 15,
+    },
+
     buttonLeftContainer: {
         position: 'relative',
         marginVertical: -5

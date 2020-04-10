@@ -42,14 +42,11 @@ export const styles = StyleSheet.create({
     marginLeft: 5,
   },
 
-  option: {
+  options: {
     flexDirection: 'row',
-    alignItems: "center",
-    margin: 10,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginVertical: 10,
   },
-  textOption: {
-    marginLeft: 10,
-    color: theme().text,
-    fontSize: 16,
-  },
+  option: {},
 });

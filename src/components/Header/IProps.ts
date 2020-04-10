@@ -6,6 +6,7 @@ export interface IProps {
     mode?: 'menu' | 'back' | 'none',
     iconLibrary?: 'Material' | 'Ionic' | 'FontAwesome',
     iconName?: string,
+    textIcon?: string,
     onPress?: () => void,
     onMenuOpen?: () => void
 }

@@ -16,6 +16,7 @@ export const Header: FC<IProps> = ({
   iconLibrary,
   iconName,
   onPress,
+  textIcon,
 }) => {
   const {menuRef} = useContext(MenuContext);
 
@@ -59,6 +60,7 @@ export const Header: FC<IProps> = ({
           {iconLibrary && (
             <TouchableOpacity
               onPress={onPress}
+              style={{flexDirection: 'row', alignItems: 'center'}}
               hitSlop={{
                 top: 10,
                 right: 10,
@@ -66,13 +68,22 @@ export const Header: FC<IProps> = ({
                 left: 10,
               }}>
               {iconLibrary === 'Material' && iconName && (
-                <MaterialIcons name={iconName} size={30} color="white" />
+                <>
+                  <Text style={styles.textIcon}>{textIcon}</Text>
+                  <MaterialIcons name={iconName} size={25} color="white" />
+                </>
               )}
               {iconLibrary === 'FontAwesome' && iconName && (
-                <FontAwesome name={iconName} size={30} color="white" />
+                <>
+                  <Text style={styles.textIcon}>{textIcon}</Text>
+                  <FontAwesome name={iconName} size={30} color="white" />
+                </>
               )}
               {iconLibrary === 'Ionic' && iconName && (
-                <Ionicons name={iconName} size={30} color="white" />
+                <>
+                  <Text style={styles.textIcon}>{textIcon}</Text>
+                  <Ionicons name={iconName} size={30} color="white" />
+                </>
               )}
             </TouchableOpacity>
           )}
