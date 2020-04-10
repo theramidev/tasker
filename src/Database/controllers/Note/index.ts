@@ -1,7 +1,12 @@
 import { 
     createNote,
-    setNoteComplement
+    setNoteComplement,
+    getAllNotes,
+    getNoteComplements,
+    getNoteById
 } from './store';
+import { INote, MNote } from '../../../models/note.model';
+import { INoteComplement, MNoteComplement } from '../../../models/noteComplement.model';
 
 export type noteComplement = {type: 'Audio' | 'Video' | 'Image', path: string};
 export type noteCreateParam = {
@@ -16,6 +21,47 @@ export type noteCreateParam = {
 }
 
 class NoteController {
+
+    /**
+     * @description Busca una nota por su ID
+     * @param noteId Id de la nota que se va a buscar
+     * @return Promise<MNote>
+     */
+    public static getNoteById(noteId: number): Promise<MNote> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const noteResult: INote = (await (await getNoteById(noteId)).rows.item(0));
+                const complementsResult: INoteComplement[] = (await getNoteComplements(noteId)).rows.raw();
+                const complements: MNoteComplement[] = complementsResult.map(complement => new MNoteComplement(complement));
+                
+                resolve(new MNote(noteResult, complements));
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
+
+    /**
+     * @description Obtiene todas las notas de la base de datos
+     * @return Promise<MNote[]>
+     */
+    public static getAllNotes(): Promise<MNote[]> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const notesResult: INote[] = (await getAllNotes()).rows.raw();
+
+                const notes: MNote[] = await Promise.all(notesResult.map(async (note) => {
+                    const complementsResult: INoteComplement[] = (await getNoteComplements(note.id)).rows.raw();
+                    const complements: MNoteComplement[] = complementsResult.map(complement => new MNoteComplement(complement));
+                    return new MNote(note, complements)
+                }))
+            
+                resolve(notes);    
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
 
     /**
      * @description Crea una nota en la base de datos

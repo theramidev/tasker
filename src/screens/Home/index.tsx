@@ -11,15 +11,9 @@ import NoteController from '../../Database/controllers/Note';
 class HomeScreen extends Component<IProps, IState> {
 
     async componentDidMount() {
-        const noteId = await NoteController.createNote(
-            {
-                title: 'Mi segunda nota',
-                message: 'Mensaje de mi segunda nota',
-                complements: [{path: 'path', type: 'Audio'}, {path: 'path', type: 'Image'}]
-            }
-        );
+        const notes = await NoteController.getAllNotes();
 
-        console.log(noteId);
+        console.log(notes);
         
     }
 

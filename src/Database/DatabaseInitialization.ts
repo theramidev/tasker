@@ -21,16 +21,16 @@ class DatabaseInitialization {
                 color TEXT,
                 isFavorite INTEGER NOT NULL,
                 isFixed INTEGER NOT NULL,
-                date_reminder INTEGER,
-                date_update INTEGER NOT NULL,
-                date_register INTEGER NOT NULL
+                date_reminder TEXT,
+                date_update TEXT NOT NULL,
+                date_register TEXT NOT NULL
             )`,
         );
 
         //note complement
         transaction.executeSql(
             `CREATE TABLE IF NOT EXISTS note_complement(
-                id INTEGER PRYMARY KEY,
+                id INTEGER PRIMARY KEY NOT NULL,
                 note_id INTEGER NOT NULL,
                 type TEXT NOT NULL,
                 path TEXT NOT NULL,
