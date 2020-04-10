@@ -1,20 +1,12 @@
 import React, { Component } from 'react';
+import { Button } from 'react-native';
 import { IProps } from './interfaces/IProps';
 import { IState } from './interfaces/IState';
 
 import { Layout } from '../../components/Layout';
 import { Header } from '../../components/Header';
-import NoteController from '../../Database/controllers/Note';
-
-
 
 class HomeScreen extends Component<IProps, IState> {
-
-    async componentDidMount() {
-        // const notes = await NoteController.getAllNotes();
-        // await NoteController.updateNote(notes[0]);
-        
-    }
 
     render() {
         return(
@@ -23,6 +15,10 @@ class HomeScreen extends Component<IProps, IState> {
                     navigation={this.props.navigation}
                     title="Tasker"
                     mode="menu"
+                />
+                <Button 
+                    title="Obtener foto"
+                    onPress={() => this.setState({isVisible: true})}
                 />
             </Layout>
         )
