@@ -11,9 +11,8 @@ import NoteController from '../../Database/controllers/Note';
 class HomeScreen extends Component<IProps, IState> {
 
     async componentDidMount() {
-        const notes = await NoteController.getAllNotes();
-
-        console.log(notes);
+        // const notes = await NoteController.getAllNotes();
+        // await NoteController.updateNote(notes[0]);
         
     }
 

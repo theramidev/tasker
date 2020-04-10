@@ -1,9 +1,51 @@
 import { ResultSet } from "react-native-sqlite-storage";
 import Database from "../..";
 import { noteComplement, noteCreateParam } from '.';
+import { MNote } from "../../../models/note.model";
 
 const noteTable = 'note';
 const complementTable = 'note_complement';
+
+/**
+ * @description Elimina una nota de la base de datos
+ */
+export const deleteNote = (noteId: number): Promise<ResultSet> => {
+    return Database.sentence(
+        `DELETE FROM ${noteTable} WHERE id = ?`,
+        [noteId]
+    );
+}
+
+/**
+ * @description Elmina los complemento de una nota
+ */
+export const deleteComplement = (noteId: number): Promise<ResultSet> => {
+    return Database.sentence(
+        `DELETE FROM ${complementTable} WHERE note_id = ?`,
+        [noteId]
+    );
+}
+
+/**
+ * @description Actualiza una nota en la base de datos
+ */
+export const updateNote = ({
+    title,
+    message,
+    tag,
+    color,
+    dateReminder,
+    noteId,
+    isFavorite,
+    isFixed
+}: MNote): Promise<ResultSet> => {
+    return Database.sentence(
+        `UPDATE ${noteTable} SET title = ?, message = ?, tag = ?, color = ?, date_reminder = ?, 
+        date_update = ?, isFavorite = ?, isFixed = ? WHERE id = ?`,
+        [title, message, tag, color, dateReminder?.toDateString(), new Date().toDateString(), isFavorite,
+        isFixed, noteId]
+    );
+}
 
 /**
  * @description Obtiene una nota de la base de datos

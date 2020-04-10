@@ -3,7 +3,10 @@ import {
     setNoteComplement,
     getAllNotes,
     getNoteComplements,
-    getNoteById
+    getNoteById,
+    updateNote,
+    deleteComplement,
+    deleteNote
 } from './store';
 import { INote, MNote } from '../../../models/note.model';
 import { INoteComplement, MNoteComplement } from '../../../models/noteComplement.model';
@@ -21,6 +24,53 @@ export type noteCreateParam = {
 }
 
 class NoteController {
+
+    /**
+     * @description Elimina una nota de la base de datos
+     * @param noteId ID de la nota que va a ser eliminada
+     * @return Promise<boolean>
+     */
+    public static deleteNote(noteId: number): Promise<boolean> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const { rowsAffected } = (await deleteNote(noteId));
+
+                resolve(rowsAffected > 0);
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
+
+    /**
+     * @description Actualiza una nota
+     * @param note Nota ACTUALIZADA que se va a guardar en la base de datos 
+     * @param updateComplements Condicional para actualizar los complementos. Default: true
+     */
+    public static updateNote(note: MNote, updateComplements: boolean = true): Promise<MNote> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await updateNote(note);
+
+                if (note.complements.length && updateComplements) {
+                    await deleteComplement(note.noteId);
+                    for (const {path, type} of note.complements) {
+                        await setNoteComplement({path, type}, note.noteId);
+                    }
+                }
+
+                const noteResult: INote = (await getNoteById(note.noteId)).rows.item(0);
+                const complementsResult: INoteComplement[] = (await getNoteComplements(note.noteId)).rows.raw();
+                const complements: MNoteComplement[] = complementsResult.map((complement) => {
+                    return new MNoteComplement(complement);
+                });
+
+                resolve(new MNote(noteResult, complements));
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
 
     /**
      * @description Busca una nota por su ID
