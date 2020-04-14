@@ -16,10 +16,6 @@ class HomeScreen extends Component<IProps, IState> {
                     title="Tasker"
                     mode="menu"
                 />
-                <Button 
-                    title="Obtener foto"
-                    onPress={() => this.setState({isVisible: true})}
-                />
             </Layout>
         )
     }

@@ -2,6 +2,53 @@ import ImagePicker from 'react-native-image-picker';
 import fs from 'react-native-fs';
 
 /**
+ * @description Graba un video
+ * @return Promise<string> --> Path del video
+ */
+export const takeVideo = (videoQuality: 'low' | 'high' = 'low'): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        try {
+            ImagePicker.launchCamera({
+                cameraType: 'back',
+                mediaType: 'video',
+                videoQuality,
+                durationLimit: 90,
+                noData: true,
+                permissionDenied: {
+                    title: 'Permiso denegado',
+                    text: 'Para poder grabar videos con su cámara.',
+                    reTryTitle: 'Reintentar',
+                    okTitle: 'Estoy seguro'
+                }
+            }, async ({uri, didCancel, error}) => {
+                if (didCancel) {
+                    reject('canceled');
+                    return;
+                }
+
+                if (error) {
+                    reject(error);
+                    return;
+                }
+
+                const existDir = await fs.exists(`${fs.ExternalDirectoryPath}/videos`);
+
+                if (!existDir) {
+                    await fs.mkdir(`${fs.ExternalDirectoryPath}/videos`);
+                }
+                // console.log(uri);
+                
+                const path = `${fs.ExternalDirectoryPath}/videos/${Date.now()}.mp4`;
+                await fs.copyFile(uri, 'file://'+path);
+                resolve(path);
+            });
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+/**
  * @description Toma una foto con la cámara
  * @return Promise<string> -> path de la imagen
  */
