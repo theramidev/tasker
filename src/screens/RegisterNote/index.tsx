@@ -5,9 +5,12 @@ import {
   TouchableOpacity,
   ScrollView,
   TouchableHighlight,
+  Dimensions,
 } from 'react-native';
 import Textarea from 'react-native-textarea';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Modal from 'react-native-modal';
+
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Foundation from 'react-native-vector-icons/Foundation';
 
@@ -16,11 +19,16 @@ import {Header} from '../../components/Header';
 import {IProps} from './interfaces/IProps';
 import {styles} from './styles';
 import {RecorderAudio} from './components/RecorderAudio';
+import {ModalColors} from './components/ModalColors';
+import {IState} from './interfaces/IState';
 
-export default class RegisterNoteScreen extends Component<IProps, {}> {
+export default class RegisterNoteScreen extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    this.state = {};
+    this.state = {
+      openModalColors: false,
+      headerColor: undefined,
+    };
   }
 
   render() {
@@ -33,6 +41,7 @@ export default class RegisterNoteScreen extends Component<IProps, {}> {
           iconLibrary="Material"
           iconName="note-add"
           textIcon="Guardar"
+          backgroundColor={this.state.headerColor}
         />
 
         <ScrollView>
@@ -57,6 +66,13 @@ export default class RegisterNoteScreen extends Component<IProps, {}> {
 
           <RecorderAudio show={false} />
 
+          <ModalColors
+            openModal={this.state.openModalColors}
+            onClose={(data) => {
+              this.setState({openModalColors: false, headerColor: data});
+            }}
+          />
+
           <View style={styles.options}>
             <TouchableOpacity style={styles.option}>
               <AntDesign name="star" size={25} color="#F7DC6F" />
@@ -80,6 +96,16 @@ export default class RegisterNoteScreen extends Component<IProps, {}> {
 
             <TouchableOpacity style={styles.option}>
               <AntDesign name="tagso" size={25} color="#BEBEBE" />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.option}
+              onPress={() => this.setState({openModalColors: true})}>
+              <MaterialCommunityIcons
+                name="palette"
+                size={25}
+                color="#BEBEBE"
+              />
             </TouchableOpacity>
           </View>
         </ScrollView>

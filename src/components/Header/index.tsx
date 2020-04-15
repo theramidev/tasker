@@ -17,6 +17,7 @@ export const Header: FC<IProps> = ({
   iconName,
   onPress,
   textIcon,
+  backgroundColor,
 }) => {
   const {menuRef} = useContext(MenuContext);
 
@@ -27,7 +28,15 @@ export const Header: FC<IProps> = ({
         translucent={true}
         backgroundColor="transparent"
       />
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: !backgroundColor
+              ? theme().primary
+              : backgroundColor,
+          },
+        ]}>
         <View style={styles.left}>
           {/* BACK BUTTON */}
           {mode === 'back' && (

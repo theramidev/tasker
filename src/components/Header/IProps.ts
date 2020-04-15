@@ -7,6 +7,7 @@ export interface IProps {
     iconLibrary?: 'Material' | 'Ionic' | 'FontAwesome',
     iconName?: string,
     textIcon?: string,
+    backgroundColor: string | undefined,
     onPress?: () => void,
     onMenuOpen?: () => void
 }
