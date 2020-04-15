@@ -3,19 +3,31 @@ import Notification from 'react-native-push-notification';
 Notification.configure({
     onRegister: (token) => console.log('[notification.ts line 4]: ', token),
     onNotification: (notification: any) => {
-        // console.log('[notification.ts line 6]: ', notification);
-    }
+        console.log('[notification.ts line 6]: ', notification);
+    },
+    permissions: {
+        alert: true,
+        badge: true,
+        sound: true
+    },
+    popInitialNotification: true,
+    requestPermissions: true,
+
 });
 
 export default (
+    noteId: number,
     subText: string,
     tag: string,
     title: string,
     message: string,
-    date: Date
+    date: Date,
+    color: string = 'white',
+    soundName: string = 'default'
 ) => {
 
     Notification.localNotificationSchedule({
+        id: String(noteId),
         subText,
         tag,
         ongoing: false,
@@ -25,8 +37,11 @@ export default (
         title,
         message,
         playSound: true,
-        soundName: 'default',
+        soundName,
         autoCancel: true,
-        date
+        date,
+        color,
+        vibrate: true,
+        vibration: 1500
     })
 }

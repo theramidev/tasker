@@ -7,11 +7,13 @@ export default StyleSheet.create({
         width: 250
     },
     linearGradient: {
-        height: 180,
-        justifyContent: 'flex-end',
+        height: 150,
+        justifyContent: 'space-around',
         paddingHorizontal: 15,
-        paddingTop: 10,
-        paddingBottom: 15
+        paddingTop: 30,
+        paddingBottom: 15,
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     image: {
         width: 45,
