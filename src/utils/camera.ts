@@ -68,6 +68,9 @@ export const takePictureFromCamera = (): Promise<string> => {
                 }
             }, async ({didCancel, error, uri}) => {
                 if (didCancel) {
+                    if (uri) {
+                        await fs.unlink(uri);
+                    }
                     reject('canceled');
                     return;
                 }
