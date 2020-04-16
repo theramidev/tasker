@@ -8,7 +8,6 @@ import {
   Dimensions,
 } from 'react-native';
 import Textarea from 'react-native-textarea';
-import Modal from 'react-native-modal';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -21,13 +20,18 @@ import {styles} from './styles';
 import {RecorderAudio} from './components/RecorderAudio';
 import {ModalColors} from './components/ModalColors';
 import {IState} from './interfaces/IState';
+import {DateTimeModal} from './components/DateTimeModal';
+import {Options} from './components/Options';
+import {DateAlarm} from './components/DateAlarm';
 
 export default class RegisterNoteScreen extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      openModalColors: false,
       headerColor: undefined,
+      openModalColors: false,
+      openModalDate: false,
+      dateNote: null,
     };
   }
 
@@ -66,6 +70,14 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
 
           <RecorderAudio show={false} />
 
+          {this.state.dateNote && (
+            <DateAlarm
+              date={this.state.dateNote}
+              openModalDate={() => this.setState({openModalDate: true})}
+              clearDate={() => this.setState({dateNote: null})}
+            />
+          )}
+
           <ModalColors
             openModal={this.state.openModalColors}
             onClose={(data) => {
@@ -73,41 +85,18 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
             }}
           />
 
-          <View style={styles.options}>
-            <TouchableOpacity style={styles.option}>
-              <AntDesign name="star" size={25} color="#F7DC6F" />
-            </TouchableOpacity>
+          <DateTimeModal
+            show={this.state.openModalDate}
+            onClose={() => {
+              this.setState({openModalDate: false});
+            }}
+            onConfirm={(date) => this.setState({dateNote: date})}
+          />
 
-            <TouchableOpacity style={[styles.option]}>
-              <AntDesign name="pushpino" size={25} color="#BEBEBE" />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.option}>
-              <Foundation name="photo" size={25} color="#BEBEBE" />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.option}>
-              <AntDesign name="sound" size={25} color="#BEBEBE" />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.option}>
-              <AntDesign name="clockcircleo" size={25} color="#BEBEBE" />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.option}>
-              <AntDesign name="tagso" size={25} color="#BEBEBE" />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.option}
-              onPress={() => this.setState({openModalColors: true})}>
-              <MaterialCommunityIcons
-                name="palette"
-                size={25}
-                color="#BEBEBE"
-              />
-            </TouchableOpacity>
-          </View>
+          <Options
+            openModalColors={() => this.setState({openModalColors: true})}
+            openModalDate={() => this.setState({openModalDate: true})}
+          />
         </ScrollView>
       </View>
     );
