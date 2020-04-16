@@ -10,6 +10,7 @@ import {styles} from './styles';
 import {ListOfNotes} from '../../components/ListOfNotes';
 import {Layout} from '../../components/Layout';
 import {Header} from '../../components/Header';
+import { Tabs } from './components/Tabs';
 
 class HomeScreen extends Component<IProps, IState> {
 
@@ -35,24 +36,22 @@ class HomeScreen extends Component<IProps, IState> {
     ];
 
     return (
-      <Fragment>
-        <Layout>
-          <Header
-            navigation={this.props.navigation}
-            title="Tasker"
-            mode="menu"
-          />
-          <View style={styles.container}>
-            <ListOfNotes />
-          </View>
-        </Layout>
+      <Layout>
+        <Header
+          navigation={this.props.navigation}
+          title="Tasker"
+          mode="menu"
+        />
+        <View style={styles.container}>
+          <Tabs />
+        </View>
         <FloatingAction
           actions={options}
           // @ts-ignore
           onPressItem={this.goTo}
           animated={!__DEV__}
         />
-      </Fragment>
+      </Layout>
     );
   }
 }
