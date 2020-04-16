@@ -308,3 +308,4 @@ tasker.keystore
 .history
 
 # End of https://www.gitignore.io/api/reactnative,visualstudiocode
+src/Components/Header/index.tsx

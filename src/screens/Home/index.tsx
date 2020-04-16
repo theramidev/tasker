@@ -2,16 +2,17 @@ import React, {Component, Fragment} from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {IProps} from './interfaces/IProps';
+import {IState} from './interfaces/IState';
 import {FloatingAction} from 'react-native-floating-action';
 
 import {styles} from './styles';
 import {ListOfNotes} from '../../components/ListOfNotes';
 import {Layout} from '../../components/Layout';
 import {Header} from '../../components/Header';
-import {IProps} from './interfaces/IProps';
-import {IState} from './interfaces/IState';
 
 class HomeScreen extends Component<IProps, IState> {
+
   goTo = (name: string) => {
     switch (name) {
       case 'RegisterNote':
