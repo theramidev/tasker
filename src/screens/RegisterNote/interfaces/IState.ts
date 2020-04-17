@@ -1,6 +1,11 @@
 export interface IState {
+    headerColor: string | undefined;
     openModalColors: boolean;
     openModalDate: boolean;
-    headerColor: string | undefined;
+    openActionSheet: boolean;
+    favorite: boolean;
+    fixed: boolean;
     dateNote: string | Date | null;
+    imageNote: string | null;
+    videoNote: string | null | any;
 }
