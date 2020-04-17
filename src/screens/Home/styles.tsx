@@ -3,7 +3,7 @@ import {theme} from '../../assets/themes';
 
 export const styles = StyleSheet.create({
   container: {
-    height: '100%',
+    height: '101%',
   },
   add: {
     backgroundColor: theme().primary,

@@ -4,3 +4,4 @@ declare module 'react-native-shadow';
 declare module 'react-native-textarea';
 declare module 'react-native-material-ripple';
 declare module 'date-format';
+declare module 'react-native-floating-action';

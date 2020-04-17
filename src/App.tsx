@@ -18,7 +18,7 @@ import Database from './Database';
 const App = () => {
   const { setRef } = useContext(MenuContext);
   // Necesario para ignorar este warning
-  YellowBox.ignoreWarnings(['Calling `getNode()`']);
+  YellowBox.ignoreWarnings(['Calling `getNode()`', 'VirtualizedLists should']);
   useEffect(() => {
     Orientation.lockToPortrait();
 
