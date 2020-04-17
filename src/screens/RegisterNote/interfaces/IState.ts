@@ -3,6 +3,8 @@ export interface IState {
     openModalColors: boolean;
     openModalDate: boolean;
     openActionSheet: boolean;
+    openModalTags: boolean;
+
     favorite: boolean;
     fixed: boolean;
     dateNote: string | Date | null;

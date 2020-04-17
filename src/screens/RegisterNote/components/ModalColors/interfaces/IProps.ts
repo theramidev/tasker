@@ -2,5 +2,5 @@ import { NavigationScreenProp, NavigationState, NavigationParams } from "react-n
 
 export interface IProps {
     openModal: boolean;
-    onClose(palette: string): void;
+    onClose(palette: string | null): void;
 }

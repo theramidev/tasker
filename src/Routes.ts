@@ -6,13 +6,17 @@ import {
 
 import HomeScreen from './screens/Home';
 import RegisterNoteScreen from './screens/RegisterNote';
+import RegisterTagScreen from './screens/RegisterTag';
 
 const Routes = createStackNavigator(
   {
     Home: HomeScreen,
     RegisterNote: {
-        screen: RegisterNoteScreen,
-    }
+      screen: RegisterNoteScreen,
+    },
+    RegisterTag: {
+      screen: RegisterTagScreen,
+    },
   },
   {
     initialRouteName: 'Home',

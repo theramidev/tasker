@@ -15,6 +15,7 @@ export const Options: FC<IProps> = ({
   openModalDate,
   openActionSheet,
   openTakeVideo,
+  openModalTags,
 }) => {
   return (
     <View style={styles.options}>
@@ -34,7 +35,7 @@ export const Options: FC<IProps> = ({
         <IonIcons name="md-alarm" size={25} color="#BEBEBE" />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.option}>
+      <TouchableOpacity style={styles.option} onPress={openModalTags}>
         <AntDesign name="tagso" size={25} color="#BEBEBE" />
       </TouchableOpacity>
 

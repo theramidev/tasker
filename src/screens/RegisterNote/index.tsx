@@ -31,6 +31,7 @@ import {
 } from '../../utils/camera';
 import {Video} from '../../components/Video';
 import {theme} from '../../assets/themes';
+import { SelectTagModal } from './components/SelectTagModal';
 
 export default class RegisterNoteScreen extends Component<IProps, IState> {
   constructor(props: IProps) {
@@ -40,6 +41,8 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
       openModalColors: false,
       openModalDate: false,
       openActionSheet: false,
+      openModalTags: false,
+
       favorite: false,
       fixed: false,
       dateNote: null,
@@ -211,7 +214,17 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
           <ModalColors
             openModal={this.state.openModalColors}
             onClose={(data) => {
-              this.setState({openModalColors: false, headerColor: data});
+              if (data)
+                this.setState({openModalColors: false, headerColor: data});
+              else this.setState({openModalColors: false});
+            }}
+          />
+
+          <SelectTagModal
+            openModal={this.state.openModalTags}
+            closeModal={(data) => {
+              console.log(data);
+              this.setState({openModalTags: false})
             }}
           />
 
@@ -250,6 +263,7 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
             openModalDate={() => this.setState({openModalDate: true})}
             openActionSheet={() => this.setState({openActionSheet: true})}
             openTakeVideo={() => this.getVideo()}
+            openModalTags={() => this.setState({openModalTags: true})}
           />
         </ScrollView>
       </View>

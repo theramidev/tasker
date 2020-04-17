@@ -30,6 +30,7 @@ export const ModalColors: FC<IProps> = ({openModal, onClose}) => {
       animationOut="slideOutDown"
       swipeDirection="right"
       backdropOpacity={0.1}
+      onBackdropPress={() => onClose(null)}
       style={styles.modalContainer}>
       <View style={{flex: 1}}>
         <FlatList

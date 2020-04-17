@@ -6,4 +6,5 @@ export interface IProps {
     openModalDate: () => void;
     openActionSheet: () => void;
     openTakeVideo: () => void;
+    openModalTags: () => void;
 }
