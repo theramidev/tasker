@@ -1,4 +1,5 @@
 import { MNoteComplement } from "./noteComplement.model";
+import { MTag } from "./tag.model";
 
 type stringOrNull = string | null;
 
@@ -6,7 +7,7 @@ export class MNote {
     public noteId: number;
     public title: string;
     public message: string;
-    public tag: stringOrNull;
+    public tag: MTag | null;
     public color: stringOrNull;
     public isFavorite: boolean;
     public isFixed: boolean;
@@ -19,7 +20,11 @@ export class MNote {
         this.noteId = note.id;
         this.title = note.title;
         this.message = note.message;
-        this.tag = note.tag;
+        this.tag = {
+            color: note.tagColor,
+            name: note.tagName,
+            tagId: note.tag_id
+        };
         this.color = note.color;
         this.isFavorite = note.isFavorite ? true : false;
         this.isFixed = note.isFixed ? true : false;
@@ -34,11 +39,13 @@ export interface INote {
     id: number,
     title: string,
     message: string,
-    tag: stringOrNull,
     color: stringOrNull,
     isFavorite: 0 | 1,
     isFixed: 0 | 1,
     date_reminder: string | null,
     date_update: string,
-    date_register: string
+    date_register: string,
+    tag_id: number,
+    tagName: string,
+    tagColor: string
 }

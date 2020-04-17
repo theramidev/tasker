@@ -5,6 +5,7 @@ import { MNote } from "../../../models/note.model";
 
 const noteTable = 'note';
 const complementTable = 'note_complement';
+const tagTable = 'tag';
 
 /**
  * @description Elimina una nota de la base de datos
@@ -52,7 +53,9 @@ export const updateNote = ({
  */
 export const getNoteById = (noteId: number): Promise<ResultSet> => {
     return Database.sentence(
-        `SELECT * FROM ${noteTable} WHERE id = ?`,
+        `SELECT a.id, a.title, a.message, a.color, a.isFavorite, a.isFixed, 
+        a.date_reminder, a.date_update, a.date_register, b.tag_id, b.name AS tagName, 
+        colo AS tagColor FROM ${noteTable} AS a INNER JOIN ${tagTable} AS b ON a.tag = b.tag_id WHERE id = ?`,
         [noteId]
     );
 }
@@ -72,7 +75,9 @@ export const getNoteComplements = (noteId: number): Promise<ResultSet> => {
  */
 export const getAllNotes = (): Promise<ResultSet> => {
     return Database.sentence(
-        `SELECT * FROM ${noteTable}`
+        `SELECT a.id, a.title, a.message, a.color, a.isFavorite, a.isFixed, 
+        a.date_reminder, a.date_update, a.date_register, b.tag_id, b.name AS tagName, 
+        colo AS tagColor FROM ${noteTable} AS a INNER JOIN ${tagTable} AS b ON a.tag = b.tag_id`
     );
 }
 

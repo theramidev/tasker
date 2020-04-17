@@ -1,11 +1,12 @@
 import { MTask, ITask } from "./task.model";
+import { MTag } from "./tag.model";
 
 type stringOrNull = string | null;
 
 export class MThingsToDo {
     public listId: number;
     public title: string;
-    public tag: stringOrNull;
+    public tag: MTag;
     public color: stringOrNull;
     public isFavorite: boolean;
     public isFixed: boolean;
@@ -17,7 +18,11 @@ export class MThingsToDo {
     constructor(thingsToDo: IThingsToDo, tasks: ITask[] = []) {
         this.listId = thingsToDo.list_id;
         this.title = thingsToDo.title;
-        this.tag = thingsToDo.tag;
+        this.tag = {
+            color: thingsToDo.tagColor,
+            name: thingsToDo.tagName,
+            tagId: thingsToDo.tag_id
+        };
         this.color = thingsToDo.color;
         this.isFavorite = thingsToDo.isFavorite ? true : false;
         this.isFixed = thingsToDo.isFixed ? true : false;
@@ -38,4 +43,7 @@ export interface IThingsToDo {
     date_reminder: stringOrNull,
     date_update: string,
     date_register: string,
+    tag_id: number,
+    tagName: string,
+    tagColor: string
 }

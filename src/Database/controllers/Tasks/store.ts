@@ -5,6 +5,7 @@ import { MThingsToDo } from "../../../models/thingsToDo.model";
 
 const listTable = 'things_to_do';
 const taskTable = 'task';
+const tagTable = 'tag';
 
 /**
  * @description Elimina una lista de la base de datos
@@ -50,7 +51,9 @@ export const updateThingsToDo = ({
  */
 export const getThingsToDoById = (thingsToDoId: number): Promise<ResultSet> => {
     return Database.sentence(
-        `SELECT * FROM ${listTable} WHERE list_id = ?`,
+        `SELECT SELECT a.list_id, a.title, a.color, a.isFavorite, a.isFixed, a.date_reminder,
+        a.date_update, a.date_register, b.tag_id, b.name AS tagName, b.color AS tagColor 
+        FROM ${listTable} AS a INNER JOIN ${tagTable} AS b ON a.tag = b.tag_id WHERE list_id = ?`,
         [thingsToDoId]
     );
 }
@@ -70,7 +73,9 @@ export const getTaskByList = (listId: number): Promise<ResultSet> => {
  */
 export const getAllThingsToDo = (): Promise<ResultSet> => {
     return Database.sentence(
-        `SELECT * FROM ${listTable}`
+        `SELECT a.list_id, a.title, a.color, a.isFavorite, a.isFixed, a.date_reminder,
+        a.date_update, a.date_register, b.tag_id, b.name AS tagName, b.color AS tagColor 
+        FROM ${listTable} AS a INNER JOIN ${tagTable} AS b ON a.tag = b.tag_id`
     );
 }
 

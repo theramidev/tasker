@@ -19,7 +19,7 @@ class DatabaseInitialization {
                 id INTEGER PRIMARY KEY NOT NULL,
                 title TEXT NOT NULL,
                 message TEXT NOT NULL,
-                tag TEXT,
+                tag INTEGER,
                 color TEXT,
                 isFavorite INTEGER NOT NULL,
                 isFixed INTEGER NOT NULL,
@@ -27,6 +27,15 @@ class DatabaseInitialization {
                 date_update TEXT NOT NULL,
                 date_register TEXT NOT NULL
             )`,
+        );
+
+        // Tag
+        transaction.executeSql(
+            `CREATE TABLE IF NOT EXISTS tag(
+                tag_id INTEGER PRIMARY KEY NOT NULL,
+                name TEXT NOT NULL UNIQUE,
+                color TEXT NOT NULL
+            )`
         );
 
         //note complement
@@ -48,7 +57,7 @@ class DatabaseInitialization {
             `CREATE TABLE IF NOT EXISTS things_to_do(
                 list_id INTEGER PRIMARY KEY NOT NULL,
                 title TEXT NOT NULL,
-                tag TEXT,
+                tag INTEGER,
                 color TEXT,
                 isFavorite INTEGER NOT NULL,
                 isFixed INTEGER NOT NULL,
