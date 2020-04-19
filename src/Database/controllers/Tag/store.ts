@@ -21,7 +21,7 @@ export const deleteTag = (tagId: number): Promise<ResultSet> => {
  */
 export const deleteTagFromList = (tagId: number): Promise<ResultSet> => {
     return Database.sentence(
-        `UPDATE ${listTable} tag = ? WHERE tag = ?`,
+        `UPDATE ${listTable} SET tag = ? WHERE tag = ?`,
         [null, tagId]
     );
 }
@@ -31,7 +31,7 @@ export const deleteTagFromList = (tagId: number): Promise<ResultSet> => {
  */
 export const deleteTagFromNote = (tagId: number): Promise<ResultSet> => {
     return Database.sentence(
-        `UPDATE ${noteTable} tag = ? WHERE tag = ?`,
+        `UPDATE ${noteTable} SET tag = ? WHERE tag = ?`,
         [null, tagId]
     );
 }
@@ -65,7 +65,7 @@ export const updateTag = ({
  */
 export const getAllTags = (): Promise<ResultSet> => {
     return Database.sentence(
-        `SELECT * FROM ${tagTable}`
+        `SELECT tag_id, name, color FROM ${tagTable} ORDER BY tag_id DESC`
     );
 }
 

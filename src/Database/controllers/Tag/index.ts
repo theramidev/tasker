@@ -74,7 +74,7 @@ class TagController {
     public static createTag(name: string, color: string = '#282828'): Promise<number> {
         return new Promise(async (resolve, reject) => {
             try {
-                const { insertId } = await createTag(name, color);
+                const { insertId } = await createTag(name, color || '#282828');
 
                 resolve(insertId);
             } catch (error) {

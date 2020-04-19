@@ -1,5 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
-import {theme} from '../../../../assets/themes';
+import {theme} from '../../assets/themes';
 
 export const styles = StyleSheet.create({
   modalContainer: {

@@ -4,11 +4,13 @@ import {theme} from '../../../../assets/themes';
 export const styles = StyleSheet.create({
   modalContainer: {
     padding: 10,
+    paddingHorizontal: 30
   },
   modal: {
     backgroundColor: theme().light,
     borderRadius: 20,
     padding: 10,
+    paddingHorizontal: 20
   },
 
   title: {
@@ -18,9 +20,24 @@ export const styles = StyleSheet.create({
   },
 
   addtag: {
-    
+    padding: 10,
+    backgroundColor: theme().primary,
+    borderRadius: 30,
+    marginBottom: 10,
+  },
+  textTag: {
+    color: theme().light,
+    fontWeight: '800',
+    textAlign: 'center',
   },
 
-  check: {flexDirection: 'row', alignItems: 'center'},
+  check: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme(0.1).secondary,
+    padding: 5,
+    marginVertical: 5,
+    borderRadius: 10,
+  },
   label: {color: theme().text},
 });

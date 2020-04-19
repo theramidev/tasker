@@ -1,3 +1,7 @@
 import {combineReducers} from 'redux';
 
-export default combineReducers({});
+import tagsReducer from './tagsReducer';
+
+export default combineReducers({
+  tagsReducer,
+});

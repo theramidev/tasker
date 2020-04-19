@@ -18,12 +18,12 @@ import {Header} from '../../components/Header';
 import {IProps} from './interfaces/IProps';
 import {styles} from './styles';
 import {RecorderAudio} from './components/RecorderAudio';
-import {ModalColors} from './components/ModalColors';
 import {IState} from './interfaces/IState';
 import {DateTimeModal} from './components/DateTimeModal';
 import {Options} from './components/Options';
 import {DateAlarm} from './components/DateAlarm';
 import {ActionSheet} from '../../components/ActionSheet';
+import {ModalColors} from '../../components/ModalColors';
 import {
   takePictureFromCamera,
   takePictureFromGallery,
@@ -31,7 +31,7 @@ import {
 } from '../../utils/camera';
 import {Video} from '../../components/Video';
 import {theme} from '../../assets/themes';
-import { SelectTagModal } from './components/SelectTagModal';
+import {SelectTagModal} from './components/SelectTagModal';
 
 export default class RegisterNoteScreen extends Component<IProps, IState> {
   constructor(props: IProps) {
@@ -224,8 +224,9 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
             openModal={this.state.openModalTags}
             closeModal={(data) => {
               console.log(data);
-              this.setState({openModalTags: false})
+              this.setState({openModalTags: false});
             }}
+            navigation={() => this.props.navigation.navigate('RegisterTag')}
           />
 
           <DateTimeModal

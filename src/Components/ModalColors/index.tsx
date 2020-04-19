@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react';
-import Modal from 'react-native-modal';
 import {View, TouchableOpacity, FlatList} from 'react-native';
+import Modal from 'react-native-modal';
+
 import {styles} from './styles';
 import {IProps} from './interfaces/IProps';
 
@@ -11,7 +12,6 @@ export const ModalColors: FC<IProps> = ({openModal, onClose}) => {
   });
 
   const closeModal = (palette: string) => {
-    console.log(palette);
     onClose(palette);
   };
 
