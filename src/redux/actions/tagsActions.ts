@@ -14,7 +14,7 @@ export const getTags = () => async (dispatch: Dispatch) => {
     });
 
     const tags = await TagController.getAllTags();
-    console.log(tags);
+
     dispatch({
       type: tagsTypes.updateTags,
       payload: tags,

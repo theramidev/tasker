@@ -19,7 +19,7 @@ class DatabaseInitialization {
                 id INTEGER PRIMARY KEY NOT NULL,
                 title TEXT NOT NULL,
                 message TEXT NOT NULL,
-                tag INTEGER,
+                tag_id INTEGER,
                 color TEXT,
                 isFavorite INTEGER NOT NULL,
                 isFixed INTEGER NOT NULL,

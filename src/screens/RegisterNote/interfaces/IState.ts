@@ -8,6 +8,8 @@ export interface IState {
   openModalTags: boolean;
   openAudioPlayer: boolean;
 
+  title: string;
+  message: string;
   favorite: boolean;
   fixed: boolean;
   tag: MTag | null;

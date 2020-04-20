@@ -7,6 +7,8 @@ import {
   TouchableHighlight,
   Dimensions,
   Image,
+  NativeSyntheticEvent,
+  TextInputChangeEventData,
 } from 'react-native';
 import Textarea from 'react-native-textarea';
 import {connect} from 'react-redux';
@@ -36,6 +38,7 @@ import {Video} from '../../components/Video';
 import {theme} from '../../assets/themes';
 import {SelectTagModal} from './components/SelectTagModal';
 import {getTags} from '../../redux/actions/tagsActions';
+import {registerNote} from '../../redux/actions/notesActions';
 
 class RegisterNoteScreen extends Component<IProps, IState> {
   constructor(props: IProps) {
@@ -48,6 +51,8 @@ class RegisterNoteScreen extends Component<IProps, IState> {
       openModalTags: false,
       openAudioPlayer: false,
 
+      title: '',
+      message: '',
       favorite: false,
       fixed: false,
       tag: null,
@@ -56,6 +61,8 @@ class RegisterNoteScreen extends Component<IProps, IState> {
       imageNote: null,
       videoNote: null,
     };
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -69,6 +76,14 @@ class RegisterNoteScreen extends Component<IProps, IState> {
       });
     }
   }
+
+  handleChange = (
+    event: NativeSyntheticEvent<TextInputChangeEventData>,
+    name: string,
+  ) => {
+    //@ts-ignore
+    this.setState({[name]: event.nativeEvent.text});
+  };
 
   getVideo = (): void => {
     takeVideo()
@@ -140,6 +155,9 @@ class RegisterNoteScreen extends Component<IProps, IState> {
 
   saveNote = async () => {
     const {
+      title,
+      message,
+      headerColor,
       favorite,
       fixed,
       tag,
@@ -179,11 +197,27 @@ class RegisterNoteScreen extends Component<IProps, IState> {
       video = pathVideo;
     }
 
-    
+    this.props
+      .registerNote({
+        title,
+        message,
+        headerColor,
+        favorite,
+        fixed,
+        tag,
+        dateNote,
+        image,
+        video,
+        audio,
+      })
+      .then(() => console.log('Se registro'))
+      .catch(() => console.log('No se registro'));
   };
 
   render() {
     const {
+      title,
+      message,
       favorite,
       fixed,
       headerColor,
@@ -193,6 +227,7 @@ class RegisterNoteScreen extends Component<IProps, IState> {
       imageNote,
     } = this.state;
     const {tags} = this.props.tagsReducer;
+    const {loadingRegisterNote} = this.props.notesReducer;
     const colorFixed = headerColor || theme().primary;
 
     return (
@@ -205,6 +240,7 @@ class RegisterNoteScreen extends Component<IProps, IState> {
           iconName="note-add"
           textIcon="Guardar"
           backgroundColor={this.state.headerColor}
+          onPress={this.saveNote}
         />
 
         <ScrollView>
@@ -253,9 +289,11 @@ class RegisterNoteScreen extends Component<IProps, IState> {
           </View>
 
           <Input
-            value=""
+            value={title}
             placeholder="Titulo"
-            onChange={() => {}}
+            onChange={(e) => {
+              this.handleChange(e, 'title');
+            }}
             style={{marginTop: 0}}
           />
 
@@ -263,11 +301,14 @@ class RegisterNoteScreen extends Component<IProps, IState> {
             <Textarea
               containerStyle={styles.textareaContainer}
               style={styles.textarea}
-              defaultValue={''}
+              defaultValue={message}
               maxLength={150}
               placeholder={'Descripcion'}
               placeholderTextColor={'#c7c7c7'}
               underlineColorAndroid={'transparent'}
+              onChange={(e: any) => {
+                this.handleChange(e, 'message');
+              }}
             />
           </View>
 
@@ -416,14 +457,17 @@ class RegisterNoteScreen extends Component<IProps, IState> {
   }
 }
 
-const mapStateToProps = ({tagsReducer}: any) => {
+const mapStateToProps = ({tagsReducer, notesReducer}: any) => {
   return {
     tagsReducer,
+    notesReducer,
   };
 };
 
 const mapDispatchToProps = {
   getTags,
+
+  registerNote,
 };
 
 export default connect<any, any>(

@@ -97,16 +97,16 @@ export const setNoteComplement = ({path, type}: noteComplement, noteId: number):
 export const createNote = ({
     title,
     message,
-    tag,
+    tagId,
     dateReminder,
     color,
     isFavorite,
     isFixed,
 }: noteCreateParam): Promise<ResultSet> => {
     return Database.sentence(
-        `INSERT INTO ${noteTable} (title, message, tag, color, isFavorite, isFIxed, 
+        `INSERT INTO ${noteTable} (title, message, tag_id, color, isFavorite, isFIxed, 
         date_reminder, date_update, date_register) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [title.trim(), message.trim(), tag?.trim(), color?.toLowerCase(), isFavorite, isFixed,
+        [title.trim(), message.trim(), tagId, color?.toLowerCase(), isFavorite, isFixed,
          dateReminder?.getTime(), new Date().toDateString(), new Date().toDateString()]
     );
 }
