@@ -2,9 +2,14 @@ import { NavigationScreenProp, NavigationState, NavigationParams } from "react-n
 
 export interface IProps {
     navigation?: NavigationScreenProp<NavigationState, NavigationParams>;
+    hideVideo: boolean;
+    hideaudio: boolean;
+    hideImage: boolean;
+
     openModalColors: () => void;
     openModalDate: () => void;
     openActionSheet: () => void;
     openTakeVideo: () => void;
     openModalTags: () => void;
+    openAudio: () => void;
 }

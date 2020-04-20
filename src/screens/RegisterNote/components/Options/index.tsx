@@ -11,25 +11,36 @@ import {styles} from './styles';
 import {IProps} from './interfaces/IProps';
 
 export const Options: FC<IProps> = ({
+  hideImage,
+  hideVideo,
+  hideaudio,
+
   openModalColors,
   openModalDate,
   openActionSheet,
   openTakeVideo,
   openModalTags,
+  openAudio,
 }) => {
   return (
     <View style={styles.options}>
-      <TouchableOpacity style={styles.option} onPress={openActionSheet}>
-        <Foundation name="photo" size={25} color="#BEBEBE" />
-      </TouchableOpacity>
+      {!hideImage && (
+        <TouchableOpacity style={styles.option} onPress={openActionSheet}>
+          <Foundation name="photo" size={25} color="#BEBEBE" />
+        </TouchableOpacity>
+      )}
 
-      <TouchableOpacity style={styles.option} onPress={openTakeVideo}>
-        <Feather name="video" size={25} color="#BEBEBE" />
-      </TouchableOpacity>
+      {!hideVideo && (
+        <TouchableOpacity style={styles.option} onPress={openTakeVideo}>
+          <Feather name="video" size={25} color="#BEBEBE" />
+        </TouchableOpacity>
+      )}
 
-      <TouchableOpacity style={styles.option}>
-        <AntDesign name="sound" size={25} color="#BEBEBE" />
-      </TouchableOpacity>
+      {!hideaudio && (
+        <TouchableOpacity style={styles.option} onPress={openAudio}>
+          <AntDesign name="sound" size={25} color="#BEBEBE" />
+        </TouchableOpacity>
+      )}
 
       <TouchableOpacity style={styles.option} onPress={openModalDate}>
         <IonIcons name="md-alarm" size={25} color="#BEBEBE" />

@@ -9,13 +9,8 @@ export const SelectTagModal: FC<IProps> = ({
   openModal,
   closeModal,
   navigation,
+  tags,
 }) => {
-  const [tags] = useState([
-    {id: '1', tag: '#endregion', checked: false},
-    {id: '2', tag: '#region', checked: true},
-    {id: '3', tag: '#perro', checked: false},
-  ]);
-
   const goToTegisterTag = () => {
     closeModal(null);
     navigation();
@@ -23,8 +18,10 @@ export const SelectTagModal: FC<IProps> = ({
 
   const _renderChecks = ({item, index}: any) => {
     return (
-      <TouchableOpacity style={styles.check}>
-        <Text style={styles.label}>{item.tag}</Text>
+      <TouchableOpacity
+        style={styles.check}
+        onPress={() => closeModal(item)}>
+        <Text style={[styles.label, {color: item.color}]}>{item.name}</Text>
       </TouchableOpacity>
     );
   };
@@ -39,15 +36,16 @@ export const SelectTagModal: FC<IProps> = ({
       onBackdropPress={() => closeModal(null)}
       style={styles.modalContainer}>
       <View style={styles.modal}>
-        <Text style={styles.title}>Seleccionar tags</Text>
+        <Text style={styles.title}>Seleccionar tag</Text>
 
         <TouchableOpacity style={styles.addtag} onPress={goToTegisterTag}>
           <Text style={styles.textTag}>Agregar etiqueta</Text>
         </TouchableOpacity>
 
         <FlatList
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.tagId.toString()}
           data={tags}
+          ItemSeparatorComponent={() => <View style={{margin: 5}}></View>}
           renderItem={(item) => _renderChecks(item)}
         />
       </View>

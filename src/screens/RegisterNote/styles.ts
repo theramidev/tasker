@@ -21,7 +21,6 @@ export const styles = StyleSheet.create({
 
   container: {
     height: '100%',
-    paddingBottom: 40,
   },
 
   inputTitle: {
@@ -66,4 +65,14 @@ export const styles = StyleSheet.create({
     marginVertical: 10,
   },
   option: {},
+
+  newTag: {
+    position: 'absolute',
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: '#E3E3E3',
+    padding: 5,
+    borderRadius: 10,
+    flexDirection: 'row',
+  },
 });

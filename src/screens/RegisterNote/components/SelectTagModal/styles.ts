@@ -34,9 +34,8 @@ export const styles = StyleSheet.create({
   check: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: theme(0.1).secondary,
+    backgroundColor: theme(0.1).text,
     padding: 5,
-    marginVertical: 5,
     borderRadius: 10,
   },
   label: {color: theme().text},

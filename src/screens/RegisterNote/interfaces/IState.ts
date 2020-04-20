@@ -1,13 +1,18 @@
-export interface IState {
-    headerColor: string | undefined;
-    openModalColors: boolean;
-    openModalDate: boolean;
-    openActionSheet: boolean;
-    openModalTags: boolean;
+import {MTag} from 'src/models/tag.model';
 
-    favorite: boolean;
-    fixed: boolean;
-    dateNote: string | Date | null;
-    imageNote: string | null;
-    videoNote: string | null | any;
+export interface IState {
+  headerColor: string | undefined;
+  openModalColors: boolean;
+  openModalDate: boolean;
+  openActionSheet: boolean;
+  openModalTags: boolean;
+  openAudioPlayer: boolean;
+
+  favorite: boolean;
+  fixed: boolean;
+  tag: MTag | null;
+  dateNote: string | Date | null;
+  audioNote: string | null;
+  imageNote: string | null;
+  videoNote: string | null | any;
 }

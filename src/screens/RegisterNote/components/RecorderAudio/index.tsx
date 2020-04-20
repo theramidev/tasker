@@ -26,7 +26,7 @@ const audioSet: AudioSet = {
   AVFormatIDKeyIOS: AVEncodingOption.aac,
 };
 
-export const RecorderAudio: FC<IProps> = ({show}) => {
+export const RecorderAudio: FC<IProps> = ({show, clearNote, saveNote}) => {
   const [recordTime, setRecordTime] = useState<any>({
     recordSecs: 0,
     recordTime: '00:00:00',
@@ -78,12 +78,10 @@ export const RecorderAudio: FC<IProps> = ({show}) => {
     /* fs.unlink(`${fs.ExternalDirectoryPath}/audio/song.mp4`).catch((err) =>
       console.log('no se elimino'),
     ); */
-    console.log(result);
     setMomentToPlay(true);
+    saveNote(`${fs.ExternalDirectoryPath}/audio/song.ogg`);
     //console.log(await fs.readDir(result));
   };
-
-  const notAudio = () => {};
 
   const onStartPlay = async () => {
     setStart(true);
@@ -115,6 +113,12 @@ export const RecorderAudio: FC<IProps> = ({show}) => {
     audioRecorderPlayer.removePlayBackListener();
   };
 
+  const clearAll = () => {
+    setMomentToPlay(false);
+    setStart(false);
+    clearNote();
+  };
+
   if (!show) {
     return <Fragment></Fragment>;
   }
@@ -122,7 +126,7 @@ export const RecorderAudio: FC<IProps> = ({show}) => {
   return (
     <View style={styles.container}>
       <View style={styles.recorder}>
-        <TouchableOpacity style={{}}>
+        <TouchableOpacity style={{}} onPress={clearAll}>
           <AntDesign name="close" size={20} color="#FF5D5D" />
         </TouchableOpacity>
 

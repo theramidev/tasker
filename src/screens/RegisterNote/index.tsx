@@ -9,9 +9,12 @@ import {
   Image,
 } from 'react-native';
 import Textarea from 'react-native-textarea';
+import {connect} from 'react-redux';
+import fs, {stat} from 'react-native-fs';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Input} from '../../components/Input';
 import {Header} from '../../components/Header';
@@ -32,8 +35,9 @@ import {
 import {Video} from '../../components/Video';
 import {theme} from '../../assets/themes';
 import {SelectTagModal} from './components/SelectTagModal';
+import {getTags} from '../../redux/actions/tagsActions';
 
-export default class RegisterNoteScreen extends Component<IProps, IState> {
+class RegisterNoteScreen extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -42,18 +46,33 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
       openModalDate: false,
       openActionSheet: false,
       openModalTags: false,
+      openAudioPlayer: false,
 
       favorite: false,
       fixed: false,
+      tag: null,
       dateNote: null,
+      audioNote: null,
       imageNote: null,
       videoNote: null,
     };
   }
 
+  componentDidMount() {
+    this.props.getTags();
+  }
+
+  componentWillUnmount() {
+    if (this.state.imageNote) {
+      fs.unlink(this.state.imageNote).catch(() => {
+        console.log('no se elimino');
+      });
+    }
+  }
+
   getVideo = (): void => {
     takeVideo()
-      .then((uri) => {
+      .then(async (uri) => {
         this.setState({videoNote: uri});
         this.setState({openActionSheet: false});
       })
@@ -65,8 +84,24 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
 
   getImageCamera = () => {
     takePictureFromCamera()
-      .then((uri) => {
-        this.setState({imageNote: uri});
+      .then(async (uri) => {
+        if (!(await fs.exists(`${fs.ExternalDirectoryPath}/auxImage`))) {
+          await fs.mkdir(`${fs.ExternalDirectoryPath}/auxImage`);
+        }
+
+        if (this.state.imageNote) {
+          await fs.unlink('file://' + this.state.imageNote);
+        }
+
+        const pathImage = `${
+          fs.ExternalDirectoryPath
+        }/auxImage/image${new Date().getTime()}.jpg`;
+
+        await fs.copyFile(uri, pathImage);
+
+        this.setState({
+          imageNote: pathImage,
+        });
         this.setState({openActionSheet: false});
       })
       .catch((err) => {
@@ -77,8 +112,24 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
 
   getImageGalery = () => {
     takePictureFromGallery()
-      .then((uri) => {
-        this.setState({imageNote: uri});
+      .then(async (uri) => {
+        if (!(await fs.exists(`${fs.ExternalDirectoryPath}/auxImage`))) {
+          await fs.mkdir(`${fs.ExternalDirectoryPath}/auxImage`);
+        }
+
+        if (this.state.imageNote) {
+          await fs.unlink('file://' + this.state.imageNote);
+        }
+
+        const pathImage = `${
+          fs.ExternalDirectoryPath
+        }/auxImage/image${new Date().getTime()}.jpg`;
+
+        await fs.copyFile(uri, pathImage);
+
+        this.setState({
+          imageNote: pathImage,
+        });
         this.setState({openActionSheet: false});
       })
       .catch((err) => {
@@ -87,8 +138,61 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
       });
   };
 
+  saveNote = async () => {
+    const {
+      favorite,
+      fixed,
+      tag,
+      dateNote,
+      audioNote,
+      imageNote,
+      videoNote,
+    } = this.state;
+    let image = imageNote;
+    let audio = audioNote;
+    let video = videoNote;
+
+    if (image) {
+      const pathImage = `${
+        fs.ExternalDirectoryPath
+      }/images/image${new Date().getTime()}.jpg`;
+
+      await fs.copyFile(image, pathImage);
+      image = pathImage;
+    }
+
+    if (audio) {
+      const pathAudio = `${
+        fs.ExternalDirectoryPath
+      }/song/audio${new Date().getTime()}.jpg`;
+
+      await fs.copyFile(audio, pathAudio);
+      audio = pathAudio;
+    }
+
+    if (video) {
+      const pathVideo = `${
+        fs.ExternalDirectoryPath
+      }/videos/video${new Date().getTime()}.jpg`;
+
+      await fs.copyFile(video, pathVideo);
+      video = pathVideo;
+    }
+
+    
+  };
+
   render() {
-    const {favorite, fixed, headerColor} = this.state;
+    const {
+      favorite,
+      fixed,
+      headerColor,
+      tag,
+      openAudioPlayer,
+      videoNote,
+      imageNote,
+    } = this.state;
+    const {tags} = this.props.tagsReducer;
     const colorFixed = headerColor || theme().primary;
 
     return (
@@ -167,7 +271,16 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
             />
           </View>
 
-          <RecorderAudio show={false} />
+          {/* Componente de audio */}
+          <RecorderAudio
+            show={openAudioPlayer}
+            clearNote={() =>
+              this.setState({openAudioPlayer: false, audioNote: null})
+            }
+            saveNote={(path) => {
+              this.setState({audioNote: path});
+            }}
+          />
 
           {this.state.dateNote && (
             <DateAlarm
@@ -181,7 +294,10 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
             <View style={{position: 'relative'}}>
               <TouchableOpacity
                 style={{position: 'absolute', top: 15, left: 15, zIndex: 10}}
-                onPress={() => this.setState({imageNote: null})}>
+                onPress={async () => {
+                  await fs.unlink('file://' + this.state.imageNote);
+                  this.setState({imageNote: null});
+                }}>
                 <AntDesign name="close" size={20} color="#FF3737" />
               </TouchableOpacity>
 
@@ -211,6 +327,23 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
             </View>
           )}
 
+          {tag && (
+            <View style={{position: 'relative', height: 40, marginTop: 10}}>
+              <View style={styles.newTag}>
+                <Text style={{color: tag.color}}>{tag.name}</Text>
+                <TouchableOpacity onPress={() => this.setState({tag: null})}>
+                  <MaterialCommunityIcons
+                    name="close"
+                    size={20}
+                    color="#FF2222"
+                    style={{marginLeft: 10}}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+
+          {/* Modal de los colores de la nota */}
           <ModalColors
             openModal={this.state.openModalColors}
             onClose={(data) => {
@@ -220,15 +353,19 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
             }}
           />
 
+          {/* MODAL TAGS */}
           <SelectTagModal
             openModal={this.state.openModalTags}
             closeModal={(data) => {
               console.log(data);
-              this.setState({openModalTags: false});
+              if (data) this.setState({openModalTags: false, tag: data});
+              else this.setState({openModalTags: false});
             }}
             navigation={() => this.props.navigation.navigate('RegisterTag')}
+            tags={tags}
           />
 
+          {/* Modal de alarma */}
           <DateTimeModal
             show={this.state.openModalDate}
             onClose={() => {
@@ -237,6 +374,7 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
             onConfirm={(date) => this.setState({dateNote: date})}
           />
 
+          {/* opciones de camara */}
           <ActionSheet
             isVisible={this.state.openActionSheet}
             title="Seleccionar"
@@ -260,14 +398,35 @@ export default class RegisterNoteScreen extends Component<IProps, IState> {
           />
 
           <Options
+            hideImage={videoNote !== null || imageNote !== null}
+            hideVideo={
+              imageNote !== null || openAudioPlayer || videoNote !== null
+            }
+            hideaudio={videoNote !== null || openAudioPlayer}
             openModalColors={() => this.setState({openModalColors: true})}
             openModalDate={() => this.setState({openModalDate: true})}
             openActionSheet={() => this.setState({openActionSheet: true})}
             openTakeVideo={() => this.getVideo()}
             openModalTags={() => this.setState({openModalTags: true})}
+            openAudio={() => this.setState({openAudioPlayer: true})}
           />
         </ScrollView>
       </View>
     );
   }
 }
+
+const mapStateToProps = ({tagsReducer}: any) => {
+  return {
+    tagsReducer,
+  };
+};
+
+const mapDispatchToProps = {
+  getTags,
+};
+
+export default connect<any, any>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(RegisterNoteScreen);
