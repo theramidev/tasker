@@ -5,14 +5,19 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {IProps} from './interfaces/IProps';
 import {IState} from './interfaces/IState';
 import {FloatingAction} from 'react-native-floating-action';
+import {connect} from 'react-redux';
 
 import {styles} from './styles';
 import {ListOfNotes} from '../../components/ListOfNotes';
 import {Layout} from '../../components/Layout';
 import {Header} from '../../components/Header';
-import { Tabs } from './components/Tabs';
+import {Tabs} from './components/Tabs';
+import {getAllNotes} from '../../redux/actions/notesActions';
 
 class HomeScreen extends Component<IProps, IState> {
+  componentDidMount() {
+    this.props.getAllNotes();
+  }
 
   goTo = (name: string) => {
     switch (name) {
@@ -37,11 +42,7 @@ class HomeScreen extends Component<IProps, IState> {
 
     return (
       <Layout>
-        <Header
-          navigation={this.props.navigation}
-          title="Tasker"
-          mode="menu"
-        />
+        <Header navigation={this.props.navigation} title="Tasker" mode="menu" />
         <View style={styles.container}>
           <Tabs />
         </View>
@@ -56,4 +57,17 @@ class HomeScreen extends Component<IProps, IState> {
   }
 }
 
-export default HomeScreen;
+const mapStateToProps = ({notesReducer}: any) => {
+  return {
+    notesReducer,
+  };
+};
+
+const mapDispatchToProps = {
+  getAllNotes,
+};
+
+export default connect<any, any>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(HomeScreen);

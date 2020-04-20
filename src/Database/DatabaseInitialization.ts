@@ -25,7 +25,11 @@ class DatabaseInitialization {
                 isFixed INTEGER NOT NULL,
                 date_reminder TEXT,
                 date_update TEXT NOT NULL,
-                date_register TEXT NOT NULL
+                date_register TEXT NOT NULL,
+                CONSTRAINT fk_tag
+                  FOREIGN KEY (tag_id)
+                  REFERENCES note(id)
+                  ON UPDATE CASCADE
             )`,
         );
 

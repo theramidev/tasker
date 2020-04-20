@@ -197,21 +197,18 @@ class RegisterNoteScreen extends Component<IProps, IState> {
       video = pathVideo;
     }
 
-    this.props
-      .registerNote({
-        title,
-        message,
-        headerColor,
-        favorite,
-        fixed,
-        tag,
-        dateNote,
-        image,
-        video,
-        audio,
-      })
-      .then(() => console.log('Se registro'))
-      .catch(() => console.log('No se registro'));
+    this.props.registerNote({
+      title,
+      message,
+      headerColor,
+      favorite,
+      fixed,
+      tag,
+      dateNote,
+      image,
+      video,
+      audio,
+    });
   };
 
   render() {

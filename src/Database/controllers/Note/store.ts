@@ -77,7 +77,7 @@ export const getAllNotes = (): Promise<ResultSet> => {
     return Database.sentence(
         `SELECT a.id, a.title, a.message, a.color, a.isFavorite, a.isFixed, 
         a.date_reminder, a.date_update, a.date_register, b.tag_id, b.name AS tagName, 
-        colo AS tagColor FROM ${noteTable} AS a INNER JOIN ${tagTable} AS b ON a.tag = b.tag_id`
+        b.color AS tagColor FROM ${noteTable} AS a INNER JOIN ${tagTable} AS b ON a.tag_id = b.tag_id`
     );
 }
 

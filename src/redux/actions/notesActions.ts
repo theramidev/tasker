@@ -13,12 +13,14 @@ export const getAllNotes = () => async (dispatch: Dispatch) => {
     });
 
     const notes = await NoteController.getAllNotes();
-
+    console.log(notes);
+    
     dispatch({
       type: notesTypes.updateNotes,
       payload: notes,
     });
   } catch (err) {
+    console.log(err);
     dispatch({
       type: notesTypes.errorGetNotes,
       payload: err,
