@@ -20,11 +20,11 @@ export class MNote {
         this.noteId = note.id;
         this.title = note.title;
         this.message = note.message;
-        this.tag = {
+        this.tag = note.tag_id ? {
             color: note.tagColor,
             name: note.tagName,
-            tagId: note.tag_id
-        };
+            tagId: note.tag_id,
+        } : null;
         this.color = note.color;
         this.isFavorite = note.isFavorite ? true : false;
         this.isFixed = note.isFixed ? true : false;

@@ -6,7 +6,7 @@ import {
 import { MNote } from 'src/models/note.model';
 
 export interface IProps {
-  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+  navigation?: NavigationScreenProp<NavigationState, NavigationParams>;
 
   notesReducer: {
     notes: MNote[];
@@ -20,9 +20,4 @@ export interface IProps {
     loadingUpdateNote: boolean;
     errorUpdateNote: any | null;
   };
-
-  /**
-   * @description se obtienen las notas de la base de datos
-   */
-  getAllNotes(): Promise<void>;
 }

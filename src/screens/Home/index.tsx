@@ -31,6 +31,7 @@ class HomeScreen extends Component<IProps, IState> {
   };
 
   render() {
+    const {notes} = this.props.notesReducer;
     const options = [
       {
         text: 'Agregar nota',
@@ -44,7 +45,7 @@ class HomeScreen extends Component<IProps, IState> {
       <Layout>
         <Header navigation={this.props.navigation} title="Tasker" mode="menu" />
         <View style={styles.container}>
-          <Tabs />
+          <Tabs notes={notes} />
         </View>
         <FloatingAction
           actions={options}

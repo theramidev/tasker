@@ -182,8 +182,8 @@ class RegisterNoteScreen extends Component<IProps, IState> {
     if (audio) {
       const pathAudio = `${
         fs.ExternalDirectoryPath
-      }/song/audio${new Date().getTime()}.jpg`;
-
+      }/audio/audio${new Date().getTime()}.ogg`;
+      console.log(audio);
       await fs.copyFile(audio, pathAudio);
       audio = pathAudio;
     }
@@ -238,6 +238,7 @@ class RegisterNoteScreen extends Component<IProps, IState> {
           textIcon="Guardar"
           backgroundColor={this.state.headerColor}
           onPress={this.saveNote}
+          loading={loadingRegisterNote}
         />
 
         <ScrollView>

@@ -1,5 +1,11 @@
 import React, {FC, useContext} from 'react';
-import {View, Text, StatusBar, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StatusBar,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {HeaderBackButton} from 'react-navigation-stack';
 import {styles} from './style';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -18,6 +24,7 @@ export const Header: FC<IProps> = ({
   onPress,
   textIcon,
   backgroundColor,
+  loading = false,
 }) => {
   const {menuRef} = useContext(MenuContext);
 
@@ -68,6 +75,7 @@ export const Header: FC<IProps> = ({
         <View style={styles.right}>
           {iconLibrary && (
             <TouchableOpacity
+              disabled={loading}
               onPress={onPress}
               style={{flexDirection: 'row', alignItems: 'center'}}
               hitSlop={{
@@ -78,8 +86,14 @@ export const Header: FC<IProps> = ({
               }}>
               {iconLibrary === 'Material' && iconName && (
                 <>
-                  <Text style={styles.textIcon}>{textIcon}</Text>
-                  <MaterialIcons name={iconName} size={25} color="white" />
+                  {!loading ? (
+                    <>
+                      <Text style={styles.textIcon}>{textIcon}</Text>
+                      <MaterialIcons name={iconName} size={25} color="white" />
+                    </>
+                  ) : (
+                    <ActivityIndicator size="small" color={theme().light} />
+                  )}
                 </>
               )}
               {iconLibrary === 'FontAwesome' && iconName && (

@@ -2,6 +2,7 @@ import {Dispatch} from 'redux';
 
 import notesTypes from '../types/notesTypes';
 import NoteController from '../../Database/controllers/Note';
+import {MNote} from 'src/models/note.model';
 
 /**
  * @description se obtienen las notas de la base de datos
@@ -14,7 +15,7 @@ export const getAllNotes = () => async (dispatch: Dispatch) => {
 
     const notes = await NoteController.getAllNotes();
     console.log(notes);
-    
+
     dispatch({
       type: notesTypes.updateNotes,
       payload: notes,
@@ -33,6 +34,10 @@ export const getAllNotes = () => async (dispatch: Dispatch) => {
   }
 };
 
+/**
+ * @description registra una nota en la base de datos
+ * @param note 
+ */
 export const registerNote = (note: any) => async (
   dispatch: Dispatch,
   getState: any,
@@ -56,6 +61,12 @@ export const registerNote = (note: any) => async (
     } = note;
     const {notes} = getState().notesReducer;
 
+    const complements: any[] = [
+      {path: image, type: 'Image'},
+      {path: audio, type: 'Audio'},
+      {path: video, type: 'Video'},
+    ].filter(({path}) => path !== null);
+
     const noteId = await NoteController.createNote({
       title,
       message,
@@ -64,18 +75,26 @@ export const registerNote = (note: any) => async (
       dateReminder,
       isFavorite,
       isFixed,
-      complements: [
-        {path: image, type: 'Image'},
-        {path: audio, type: 'Audio'},
-        {path: video, type: 'Video'},
-      ],
+      complements,
     });
 
-    console.log(noteId);
+    const newNote: MNote = {
+      noteId,
+      color,
+      complements,
+      dateRegister: new Date(),
+      dateUpdate: new Date(),
+      dateReminder,
+      isFavorite,
+      isFixed,
+      title,
+      message,
+      tag,
+    };
 
     dispatch({
       type: notesTypes.updateNotes,
-      payload: [...notes],
+      payload: [...notes, newNote],
     });
   } catch (err) {
     console.log(err);
