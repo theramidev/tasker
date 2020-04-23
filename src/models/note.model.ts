@@ -14,6 +14,7 @@ export class MNote {
     public dateReminder: Date | null;
     public dateUpdate: Date;
     public dateRegister: Date;
+    public isDelete: boolean;
     public complements: MNoteComplement[];
 
     constructor(note: INote, complements: MNoteComplement[] = []) {
@@ -31,6 +32,7 @@ export class MNote {
         this.dateReminder = note.date_reminder ? new Date(note.date_reminder) : null;
         this.dateUpdate = new Date(note.date_update);
         this.dateRegister = new Date(note.date_register);
+        this.isDelete = note.isDelete ? true : false;
         this.complements = complements;
     }
 }
@@ -47,5 +49,6 @@ export interface INote {
     date_register: string,
     tag_id: number,
     tagName: string,
-    tagColor: string
+    tagColor: string,
+    isDelete: number
 }

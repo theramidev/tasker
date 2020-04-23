@@ -7,6 +7,24 @@ const noteTable = 'note';
 const complementTable = 'note_complement';
 const tagTable = 'tag';
 
+export const getAllDeleteNotes = (): Promise<ResultSet> => {
+    return Database.sentence(
+        `SELECT a.id, a.title, a.message, a.color, a.isFavorite, a.isFixed, a.isDelete,
+        a.date_reminder, a.date_update, a.date_register, b.tag_id, b.name AS tagName, 
+        b.color AS tagColor FROM ${noteTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag_id = b.tag_id WHERE a.isDelete = 1`
+    );
+}
+
+/**
+ * @description Cambia el campo de eliminación
+ */
+export const updateNoteDelete = (noteId: number, isDelete: boolean): Promise<ResultSet> => {
+    return Database.sentence(
+        `UPDATE ${noteTable} SET isDelete = ? WHERE id = ?`,
+        [isDelete ? 1 : 0, noteId]
+    );
+}
+
 /**
  * @description Elimina una nota de la base de datos
  */
@@ -53,9 +71,9 @@ export const updateNote = ({
  */
 export const getNoteById = (noteId: number): Promise<ResultSet> => {
     return Database.sentence(
-        `SELECT a.id, a.title, a.message, a.color, a.isFavorite, a.isFixed, 
+        `SELECT a.id, a.title, a.message, a.color, a.isFavorite, a.isFixed, a.isDelete,
         a.date_reminder, a.date_update, a.date_register, b.tag_id, b.name AS tagName, 
-        colo AS tagColor FROM ${noteTable} AS a INNER JOIN ${tagTable} AS b ON a.tag = b.tag_id WHERE id = ?`,
+        b.color AS tagColor FROM ${noteTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag_id = b.tag_id WHERE id = ?`,
         [noteId]
     );
 }
@@ -75,7 +93,7 @@ export const getNoteComplements = (noteId: number): Promise<ResultSet> => {
  */
 export const getAllNotes = (): Promise<ResultSet> => {
     return Database.sentence(
-        `SELECT a.id, a.title, a.message, a.color, a.isFavorite, a.isFixed, 
+        `SELECT a.id, a.title, a.message, a.color, a.isFavorite, a.isFixed, a.isDelete,
         a.date_reminder, a.date_update, a.date_register, b.tag_id, b.name AS tagName, 
         b.color AS tagColor FROM ${noteTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag_id = b.tag_id`
     );

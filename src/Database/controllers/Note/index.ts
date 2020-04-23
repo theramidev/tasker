@@ -7,6 +7,8 @@ import {
   updateNote,
   deleteComplement,
   deleteNote,
+  updateNoteDelete,
+  getAllDeleteNotes
 } from './store';
 import {INote, MNote} from '../../../models/note.model';
 import {
@@ -27,6 +29,52 @@ export type noteCreateParam = {
 };
 
 class NoteController {
+
+  public static getAllDeleteNotes(): Promise<MNote[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const notesResult: INote[] = (await getAllDeleteNotes()).rows.raw();
+
+        const notes: MNote[] = await Promise.all(
+          notesResult.map(async (note) => {
+            const complementsResult: INoteComplement[] = (
+              await getNoteComplements(note.id)
+            ).rows.raw();
+            const complements: MNoteComplement[] = complementsResult.map(
+              (complement) => new MNoteComplement(complement),
+            );
+            return new MNote(note, complements);
+          }),
+        );
+
+        resolve(notes);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  /**
+   * @description Actualiza el estado de eliminado de la base de datos
+   * @param noteId ID de la nota que se va a actualizar
+   * @param isDelete Estado nuevo de la nota
+   * @return Promise<boolean>
+   */
+  public static updateDelete(noteId: number, isDelete: boolean): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { rowsAffected } = await updateNoteDelete(noteId, isDelete);
+
+        if (rowsAffected) {
+          resolve(true);
+          return;
+        }
+        resolve(false);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
   /**
    * @description Elimina una nota de la base de datos
    * @param noteId ID de la nota que va a ser eliminada
