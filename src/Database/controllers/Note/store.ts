@@ -7,14 +7,6 @@ const noteTable = 'note';
 const complementTable = 'note_complement';
 const tagTable = 'tag';
 
-export const getAllDeleteNotes = (): Promise<ResultSet> => {
-    return Database.sentence(
-        `SELECT a.id, a.title, a.message, a.color, a.isFavorite, a.isFixed, a.isDelete,
-        a.date_reminder, a.date_update, a.date_register, b.tag_id, b.name AS tagName, 
-        b.color AS tagColor FROM ${noteTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag_id = b.tag_id WHERE a.isDelete = 1`
-    );
-}
-
 /**
  * @description Cambia el campo de eliminación
  */

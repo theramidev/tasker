@@ -13,6 +13,7 @@ export class MThingsToDo {
     public dateReminder: Date | null;
     public dateUpdate: Date;
     public dateRegister: Date;
+    public isDelete: boolean;
     public tasks: MTask[];
 
     constructor(thingsToDo: IThingsToDo, tasks: ITask[] = []) {
@@ -29,6 +30,7 @@ export class MThingsToDo {
         this.dateReminder = thingsToDo.date_reminder ? new Date(thingsToDo.date_reminder) : null;
         this.dateUpdate = new Date(thingsToDo.date_update);
         this.dateRegister = new Date(thingsToDo.date_register);
+        this.isDelete = thingsToDo.isDelete ? true : false;
         this.tasks = tasks.map(task => new MTask(task));
     }
 }
@@ -45,5 +47,6 @@ export interface IThingsToDo {
     date_register: string,
     tag_id: number,
     tagName: string,
-    tagColor: string
+    tagColor: string,
+    isDelete: number
 }

@@ -26,7 +26,7 @@ class DatabaseInitialization {
                 date_reminder TEXT,
                 date_update TEXT NOT NULL,
                 date_register TEXT NOT NULL,
-                isDelete INTEGER NOT NULL DEAULT 0
+                isDelete INTEGER NOT NULL DEAULT 0,
                 CONSTRAINT fk_tag
                   FOREIGN KEY (tag_id)
                   REFERENCES note(id)
@@ -68,7 +68,8 @@ class DatabaseInitialization {
                 isFixed INTEGER NOT NULL,
                 date_reminder TEXT,
                 date_update TEXT NOT NULL,
-                date_register TEXT NOT NULL
+                date_register TEXT NOT NULL,
+                isDelete INTEGER NOT NULL DEFAULT 0
             )`
         );
 

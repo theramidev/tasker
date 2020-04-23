@@ -6,13 +6,35 @@ import {
     getThingsToDoById,
     updateThingsToDo,
     deleteTaskList,
-    deleteList
+    deleteList,
+    updateFoftDelete
 } from './store';
 import { createThingsToDoModel } from './model';
 import { IThingsToDo, MThingsToDo } from '../../../models/thingsToDo.model';
 import { ITask, MTask } from '../../../models/task.model';
 
 class TaskController {
+
+    /**
+     * @description Actualiza el delete de una lista de tareas
+     * @param toDoId ID de la lista de tareas
+     * @param isDelete
+     * @return Promise<boolean>
+     */
+    public static updateThingsToDoDelete(toDoId: number, isDelete: boolean): Promise<boolean> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const { rowsAffected } = await updateFoftDelete(toDoId, isDelete);
+                if (rowsAffected) {
+                    resolve(true);
+                    return;
+                }
+                resolve(false);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
 
     /**
      * @description Elimina una lista de tareas

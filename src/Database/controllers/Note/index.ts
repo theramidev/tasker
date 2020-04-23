@@ -7,8 +7,7 @@ import {
   updateNote,
   deleteComplement,
   deleteNote,
-  updateNoteDelete,
-  getAllDeleteNotes
+  updateNoteDelete
 } from './store';
 import {INote, MNote} from '../../../models/note.model';
 import {
@@ -29,30 +28,6 @@ export type noteCreateParam = {
 };
 
 class NoteController {
-
-  public static getAllDeleteNotes(): Promise<MNote[]> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const notesResult: INote[] = (await getAllDeleteNotes()).rows.raw();
-
-        const notes: MNote[] = await Promise.all(
-          notesResult.map(async (note) => {
-            const complementsResult: INoteComplement[] = (
-              await getNoteComplements(note.id)
-            ).rows.raw();
-            const complements: MNoteComplement[] = complementsResult.map(
-              (complement) => new MNoteComplement(complement),
-            );
-            return new MNote(note, complements);
-          }),
-        );
-
-        resolve(notes);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
 
   /**
    * @description Actualiza el estado de eliminado de la base de datos

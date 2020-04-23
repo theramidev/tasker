@@ -8,6 +8,16 @@ const taskTable = 'task';
 const tagTable = 'tag';
 
 /**
+ * @description Actualiza el campo de delete
+ */
+export const updateFoftDelete = (toDoId: number, isDelete: boolean): Promise<ResultSet> => {
+    return Database.sentence(
+        `UPDATE ${listTable} SET isDelete = ? WHERE list_id = ?`,
+        [isDelete ? 1 : 0, toDoId]
+    );
+}
+
+/**
  * @description Elimina una lista de la base de datos
  */
 export const deleteList = (listId: number): Promise<ResultSet> => {
@@ -51,9 +61,9 @@ export const updateThingsToDo = ({
  */
 export const getThingsToDoById = (thingsToDoId: number): Promise<ResultSet> => {
     return Database.sentence(
-        `SELECT SELECT a.list_id, a.title, a.color, a.isFavorite, a.isFixed, a.date_reminder,
+        `SELECT SELECT a.list_id, a.title, a.color, a.isFavorite, a.isFixed, a.date_reminder, a.isDelete,
         a.date_update, a.date_register, b.tag_id, b.name AS tagName, b.color AS tagColor 
-        FROM ${listTable} AS a INNER JOIN ${tagTable} AS b ON a.tag = b.tag_id WHERE list_id = ?`,
+        FROM ${listTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag = b.tag_id WHERE list_id = ?`,
         [thingsToDoId]
     );
 }
@@ -73,9 +83,9 @@ export const getTaskByList = (listId: number): Promise<ResultSet> => {
  */
 export const getAllThingsToDo = (): Promise<ResultSet> => {
     return Database.sentence(
-        `SELECT a.list_id, a.title, a.color, a.isFavorite, a.isFixed, a.date_reminder,
+        `SELECT a.list_id, a.title, a.color, a.isFavorite, a.isFixed, a.date_reminder, a.isDelete,
         a.date_update, a.date_register, b.tag_id, b.name AS tagName, b.color AS tagColor 
-        FROM ${listTable} AS a INNER JOIN ${tagTable} AS b ON a.tag = b.tag_id`
+        FROM ${listTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag = b.tag_id`
     );
 }
 
