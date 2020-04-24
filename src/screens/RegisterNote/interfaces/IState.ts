@@ -1,7 +1,7 @@
 import {MTag} from 'src/models/tag.model';
 
 export interface IState {
-  headerColor: string | undefined;
+  headerColor: string | null;
   openModalColors: boolean;
   openModalDate: boolean;
   openActionSheet: boolean;

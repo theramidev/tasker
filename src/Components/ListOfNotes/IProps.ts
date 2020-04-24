@@ -20,9 +20,4 @@ export interface IProps {
     loadingUpdateNote: boolean;
     errorUpdateNote: any | null;
   };
-
-  /**
-   * @description se obtienen las notas de la base de datos
-   */
-  getAllNotes(): Promise<void>;
 }

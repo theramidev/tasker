@@ -4,7 +4,7 @@ import {
   NavigationParams,
 } from 'react-navigation';
 import {MTag} from 'src/models/tag.model';
-import { MNote } from 'src/models/note.model';
+import {MNote} from 'src/models/note.model';
 
 export interface IProps {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -41,4 +41,11 @@ export interface IProps {
    * @description registra una nota en la base de datos
    */
   registerNote(note: any): Promise<void>;
+
+  /**
+   * @description modifica una nota
+   * @param note
+   * @param index
+   */
+  updateNote(note: any, noteComplements: any, index: number): Promise<void>;
 }

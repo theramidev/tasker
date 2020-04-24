@@ -8,6 +8,8 @@ export interface IProps {
     iconName?: string,
     textIcon?: string,
     backgroundColor?: string | undefined,
+    loading?: boolean;
+
     onPress?: () => void,
     onMenuOpen?: () => void
 }
