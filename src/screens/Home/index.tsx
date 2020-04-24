@@ -8,7 +8,6 @@ import {FloatingAction} from 'react-native-floating-action';
 import {connect} from 'react-redux';
 
 import {styles} from './styles';
-import {ListOfNotes} from '../../components/ListOfNotes';
 import {Layout} from '../../components/Layout';
 import {Header} from '../../components/Header';
 import {Tabs} from './components/Tabs';
@@ -20,14 +19,7 @@ class HomeScreen extends Component<IProps, IState> {
   }
 
   goTo = (name: string) => {
-    switch (name) {
-      case 'RegisterNote':
-        this.props.navigation.navigate(name);
-        break;
-
-      default:
-        break;
-    }
+    this.props.navigation.navigate(name);
   };
 
   render() {
@@ -37,6 +29,12 @@ class HomeScreen extends Component<IProps, IState> {
         name: 'RegisterNote',
         position: 4,
         icon: require('../../assets/icons/note.png'),
+      },
+      {
+        text: 'Agregar lista de tareas',
+        name: 'RegisterTasks',
+        position: 4,
+        icon: require('../../assets/icons/list.png'),
       },
     ];
 

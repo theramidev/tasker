@@ -115,8 +115,8 @@ export const createNote = ({
 }: noteCreateParam): Promise<ResultSet> => {
     return Database.sentence(
         `INSERT INTO ${noteTable} (title, message, tag_id, color, isFavorite, isFIxed, 
-        date_reminder, date_update, date_register) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        date_reminder, date_update, date_register, isDelete) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [title.trim(), message.trim(), tagId, color?.toLowerCase(), isFavorite, isFixed,
-         dateReminder?.getTime(), new Date().toDateString(), new Date().toDateString()]
+         dateReminder?.getTime(), new Date().toDateString(), new Date().toDateString(), 0]
     );
 }

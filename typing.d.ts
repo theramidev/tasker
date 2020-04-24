@@ -6,3 +6,4 @@ declare module 'react-native-material-ripple';
 declare module 'date-format';
 declare module 'react-native-floating-action';
 declare module 'react-native-animated-loader';
+declare module '@react-native-community/checkbox';

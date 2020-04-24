@@ -112,9 +112,9 @@ export const createThingsToDo = ({
 }: createThingsToDoModel): Promise<ResultSet> => {
     return Database.sentence(
         `INSERT INTO ${listTable} (title, tag, color, isFavorite, isFixed, date_reminder, date_update, 
-        date_register) 
+        date_register, isDelete) 
         VALUES(?, ?, ?, ?, ?, ?, ?, ?)`,
         [title, tag, color, isFavorite, isFixed, dateReminder?.toDateString(), new Date().toDateString(),
-        new Date().toDateString()]
+        new Date().toDateString(), 0]
     );
 }
