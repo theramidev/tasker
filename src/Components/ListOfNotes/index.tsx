@@ -18,7 +18,10 @@ import {IProps} from './IProps';
 import {MNote} from 'src/models/note.model';
 import {arrayToObject} from '../../utils/arrayToObject';
 
-const ListOfNotesComponent: FC<IProps> = ({notesReducer: {notes}}) => {
+const ListOfNotesComponent: FC<IProps> = ({
+  notesReducer: {notes},
+  navigation,
+}) => {
   const cutText = (txt: string) => {
     if (txt.length > 100) {
       return txt.substr(0, 100) + '...';
@@ -39,7 +42,8 @@ const ListOfNotesComponent: FC<IProps> = ({notesReducer: {notes}}) => {
             borderBottomColor: item.color || '#BEBEBE',
             borderBottomWidth: item.color ? 3 : 0,
           },
-        ]}>
+        ]}
+        onPress={() => navigation.navigate('RegisterNote', {item, index})}>
         {media.Image && (
           <Image
             style={styles.image}

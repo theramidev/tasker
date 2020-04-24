@@ -45,7 +45,7 @@ class HomeScreen extends Component<IProps, IState> {
       <Layout>
         <Header navigation={this.props.navigation} title="Tasker" mode="menu" />
         <View style={styles.container}>
-          <Tabs notes={notes} />
+          <Tabs notes={notes} navigation={this.props.navigation} />
         </View>
         <FloatingAction
           actions={options}

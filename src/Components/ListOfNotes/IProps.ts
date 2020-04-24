@@ -6,7 +6,7 @@ import {
 import { MNote } from 'src/models/note.model';
 
 export interface IProps {
-  navigation?: NavigationScreenProp<NavigationState, NavigationParams>;
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 
   notesReducer: {
     notes: MNote[];

@@ -7,7 +7,7 @@ import {ThingsToDo} from '../../../../components/ThingsToDo';
 import {theme} from '../../../../assets/themes';
 import {MNote} from 'src/models/note.model';
 
-export const Tabs: FC<{notes: MNote[]}> = ({notes}) => {
+export const Tabs: FC<{notes: MNote[], navigation: any}> = ({notes, navigation}) => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     {key: 'notes', title: 'Notas'},
@@ -17,7 +17,7 @@ export const Tabs: FC<{notes: MNote[]}> = ({notes}) => {
   const _renderScene = ({route}: any) => {
     switch (route.key) {
       case 'notes':
-        return <ListOfNotes/>;
+        return <ListOfNotes navigation={navigation}/>;
       case 'tasks':
         return <ThingsToDo />;
       default:

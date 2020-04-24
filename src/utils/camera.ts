@@ -90,15 +90,11 @@ export const takePictureFromCamera = (): Promise<string> => {
             return;
           }
 
-          const existDir = await fs.exists(
-            `${fs.ExternalDirectoryPath}/images`,
-          );
-
-          if (!existDir) {
-            await fs.mkdir(`${fs.ExternalDirectoryPath}/images`);
+          if (!(await fs.exists(`${fs.ExternalDirectoryPath}/auxImage`))) {
+            await fs.mkdir(`${fs.ExternalDirectoryPath}/auxImage`);
           }
 
-          const path = `${fs.ExternalDirectoryPath}/images/${Date.now()}.jpg`;
+          const path = `${fs.ExternalDirectoryPath}/auxImage/image${Date.now()}.jpg`;
           await fs.copyFile(uri, path);
           resolve(path);
         },
@@ -139,15 +135,11 @@ export const takePictureFromGallery = (): Promise<string> => {
             return;
           }
 
-          const existDir = await fs.exists(
-            `${fs.ExternalDirectoryPath}/images`,
-          );
-
-          if (!existDir) {
-            await fs.mkdir(`${fs.ExternalDirectoryPath}/images`);
+          if (!(await fs.exists(`${fs.ExternalDirectoryPath}/auxImage`))) {
+            await fs.mkdir(`${fs.ExternalDirectoryPath}/auxImage`);
           }
 
-          const path = `${fs.ExternalDirectoryPath}/images/${Date.now()}.jpg`;
+          const path = `${fs.ExternalDirectoryPath}/auxImage/${Date.now()}.jpg`;
           await fs.copyFile(uri, path);
 
           resolve(path);

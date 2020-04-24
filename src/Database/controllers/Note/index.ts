@@ -57,7 +57,7 @@ class NoteController {
       try {
         await updateNote(note);
 
-        if (note.complements.length && updateComplements) {
+        if (note.complements.length > 0 && updateComplements) {
           await deleteComplement(note.noteId);
           for (const {path, type} of note.complements) {
             await setNoteComplement({path, type}, note.noteId);
@@ -73,6 +73,8 @@ class NoteController {
             return new MNoteComplement(complement);
           },
         );
+
+        console.log(noteResult);
 
         resolve(new MNote(noteResult, complements));
       } catch (error) {
