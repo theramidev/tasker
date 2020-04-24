@@ -12,10 +12,15 @@ import {Layout} from '../../components/Layout';
 import {Header} from '../../components/Header';
 import {Tabs} from './components/Tabs';
 import {getAllNotes} from '../../redux/actions/notesActions';
+import NoteController from '../../Database/controllers/Note';
+import tagController from '../../Database/controllers/Tag';
 
 class HomeScreen extends Component<IProps, IState> {
-  componentDidMount() {
-    this.props.getAllNotes();
+  async componentDidMount() {
+    // this.props.getAllNotes();
+    const note = await NoteController.getNoteById(1);
+    // console.log(newNote);
+    
   }
 
   goTo = (name: string) => {

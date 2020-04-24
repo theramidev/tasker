@@ -1,6 +1,6 @@
 import {ResultSet} from 'react-native-sqlite-storage';
 import Database from '../..';
-import {noteComplement, noteCreateParam} from '.';
+import {noteCreateParam} from './model';
 import {MNote} from '../../../models/note.model';
 
 const noteTable = 'note';
@@ -45,10 +45,15 @@ export const updateNote = ({
   noteId,
   isFavorite,
   isFixed,
+  audio,
+  image,
+  video,
+  isDelete
 }: MNote): Promise<ResultSet> => {
   return Database.sentence(
     `UPDATE ${noteTable} SET title = ?, message = ?, tag_id = ?, color = ?, date_reminder = ?, 
-        date_update = ?, isFavorite = ?, isFixed = ? WHERE id = ?`,
+        date_update = ?, isFavorite = ?, isFixed = ?, audio = ?, image = ?, video = ?, isDelete = ? 
+        WHERE id = ?`,
     [
       title,
       message,
@@ -58,6 +63,10 @@ export const updateNote = ({
       new Date().toDateString(),
       isFavorite,
       isFixed,
+      audio,
+      image,
+      video,
+      isDelete,
       noteId,
     ],
   );
@@ -68,44 +77,17 @@ export const updateNote = ({
  */
 export const getNoteById = (noteId: number): Promise<ResultSet> => {
     return Database.sentence(
-        `SELECT a.id, a.title, a.message, a.color, a.isFavorite, a.isFixed, a.isDelete,
-        a.date_reminder, a.date_update, a.date_register, b.tag_id, b.name AS tagName, 
-        b.color AS tagColor FROM ${noteTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag_id = b.tag_id WHERE id = ?`,
+        `SELECT * FROM ${noteTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag_id = b.tag_id WHERE id = ?`,
         [noteId]
     );
 }
-
-/**
- * @description Obtiene los complementos de una nota
- */
-export const getNoteComplements = (noteId: number): Promise<ResultSet> => {
-  return Database.sentence(
-    `SELECT * FROM ${complementTable} WHERE note_id = ?`,
-    [noteId],
-  );
-};
 
 /**
  * @description Obtiene las notas de la base de datos
  */
 export const getAllNotes = (): Promise<ResultSet> => {
     return Database.sentence(
-        `SELECT a.id, a.title, a.message, a.color, a.isFavorite, a.isFixed, a.isDelete,
-        a.date_reminder, a.date_update, a.date_register, b.tag_id, b.name AS tagName, 
-        b.color AS tagColor FROM ${noteTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag_id = b.tag_id`,
-  );
-};
-
-/**
- * @description Setea un complemento de la nota en la base de datos
- */
-export const setNoteComplement = (
-  {path, type}: noteComplement,
-  noteId: number,
-): Promise<ResultSet> => {
-  return Database.sentence(
-    `INSERT INTO ${complementTable} (note_id, type, path) VALUES (?, ?, ?)`,
-    [noteId, type, path],
+        `SELECT * FROM ${noteTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag_id = b.tag_id`,
   );
 };
 
@@ -120,11 +102,15 @@ export const createNote = ({
   color,
   isFavorite,
   isFixed,
+  audio,
+  image,
+  video
 }: noteCreateParam): Promise<ResultSet> => {
     return Database.sentence(
-        `INSERT INTO ${noteTable} (title, message, tag_id, color, isFavorite, isFIxed, 
-        date_reminder, date_update, date_register, isDelete) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [title.trim(), message.trim(), tagId, color?.toLowerCase(), isFavorite, isFixed,
-         dateReminder?.getTime(), new Date().toDateString(), new Date().toDateString(), 0]
+        `INSERT INTO ${noteTable} (title, message, tag_id, color, isFavorite, isFixed, 
+          date_reminder, date_update, date_register, isDelete, image, video, audio) 
+          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [title, message, tagId, color, isFavorite, isFixed, dateReminder, new Date().toDateString(), 
+          new Date().toDateString(), 0, image, video, audio]
     );
 }
