@@ -1,7 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import {View} from 'react-native';
 import {IProps} from './interfaces/IProps';
 import {IState} from './interfaces/IState';
 import {FloatingAction} from 'react-native-floating-action';
@@ -12,14 +10,10 @@ import {Layout} from '../../components/Layout';
 import {Header} from '../../components/Header';
 import {Tabs} from './components/Tabs';
 import {getAllNotes} from '../../redux/actions/notesActions';
-import NoteController from '../../Database/controllers/Note';
-import tagController from '../../Database/controllers/Tag';
 
 class HomeScreen extends Component<IProps, IState> {
   async componentDidMount() {
-    // this.props.getAllNotes();
-    const note = await NoteController.getNoteById(1);
-    // console.log(newNote);
+    this.props.getAllNotes();
     
   }
 

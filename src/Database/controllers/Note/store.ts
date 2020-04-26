@@ -4,7 +4,6 @@ import {noteCreateParam} from './model';
 import {MNote} from '../../../models/note.model';
 
 const noteTable = 'note';
-const complementTable = 'note_complement';
 const tagTable = 'tag';
 
 /**
@@ -22,15 +21,6 @@ export const updateNoteDelete = (noteId: number, isDelete: boolean): Promise<Res
  */
 export const deleteNote = (noteId: number): Promise<ResultSet> => {
   return Database.sentence(`DELETE FROM ${noteTable} WHERE id = ?`, [noteId]);
-};
-
-/**
- * @description Elmina los complemento de una nota
- */
-export const deleteComplement = (noteId: number): Promise<ResultSet> => {
-  return Database.sentence(`DELETE FROM ${complementTable} WHERE note_id = ?`, [
-    noteId,
-  ]);
 };
 
 /**
