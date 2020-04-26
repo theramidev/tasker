@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import format from 'date-format';
 
 interface IProps {
   show: boolean;

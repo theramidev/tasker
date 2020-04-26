@@ -91,6 +91,7 @@ export const registerNote = (note: any) => async (
       title,
       message,
       tag,
+      isDelete: false,
     };
 
     dispatch({

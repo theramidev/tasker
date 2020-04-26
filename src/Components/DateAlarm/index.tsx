@@ -5,7 +5,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 
 import {styles} from './styles';
-import {useDateFormat} from '../../../../hooks/dateFormat';
+import {useDateFormat} from '../../hooks/dateFormat';
 
 interface IProps {
   date: Date | string | null;

@@ -24,9 +24,9 @@ import {IProps} from './interfaces/IProps';
 import {styles} from './styles';
 import {RecorderAudio} from './components/RecorderAudio';
 import {IState} from './interfaces/IState';
-import {DateTimeModal} from './components/DateTimeModal';
 import {Options} from './components/Options';
-import {DateAlarm} from './components/DateAlarm';
+import {DateTimeModal} from '../../components/DateTimeModal';
+import {DateAlarm} from '../../components/DateAlarm';
 import {ActionSheet} from '../../components/ActionSheet';
 import {ModalColors} from '../../components/ModalColors';
 import {
