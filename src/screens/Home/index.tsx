@@ -1,7 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import {View} from 'react-native';
 import {IProps} from './interfaces/IProps';
 import {IState} from './interfaces/IState';
 import {FloatingAction} from 'react-native-floating-action';
@@ -14,8 +12,9 @@ import {Tabs} from './components/Tabs';
 import {getAllNotes} from '../../redux/actions/notesActions';
 
 class HomeScreen extends Component<IProps, IState> {
-  componentDidMount() {
+  async componentDidMount() {
     this.props.getAllNotes();
+    
   }
 
   goTo = (name: string) => {

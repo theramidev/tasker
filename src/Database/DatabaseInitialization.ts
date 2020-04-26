@@ -12,6 +12,7 @@ class DatabaseInitialization {
         // transaction.executeSql(`DROP TABLE IF EXISTS note_complement`);
         // transaction.executeSql(`DROP TABLE IF EXISTS things_to_do`);
         // transaction.executeSql(`DROP TABLE IF EXISTS task`);
+        // transaction.executeSql(`DROP TABLE IF EXISTS tag`);
 
         // note table
         transaction.executeSql(
@@ -23,10 +24,13 @@ class DatabaseInitialization {
                 color TEXT,
                 isFavorite INTEGER NOT NULL,
                 isFixed INTEGER NOT NULL,
-                date_reminder TEXT,
-                date_update TEXT NOT NULL,
-                date_register TEXT NOT NULL,
+                date_reminder INTEGER,
+                date_update INTEGER NOT NULL,
+                date_register INTEGER NOT NULL,
                 isDelete INTEGER NOT NULL,
+                image TEXT,
+                video TEXT,
+                audio TEXT,
                 CONSTRAINT fk_tag
                   FOREIGN KEY (tag_id)
                   REFERENCES note(id)
@@ -38,22 +42,8 @@ class DatabaseInitialization {
         transaction.executeSql(
             `CREATE TABLE IF NOT EXISTS tag(
                 tag_id INTEGER PRIMARY KEY NOT NULL,
-                name TEXT NOT NULL UNIQUE,
-                color TEXT NOT NULL
-            )`
-        );
-
-        //note complement
-        transaction.executeSql(
-            `CREATE TABLE IF NOT EXISTS note_complement(
-                id INTEGER PRIMARY KEY NOT NULL,
-                note_id INTEGER NOT NULL,
-                type TEXT NOT NULL,
-                path TEXT NOT NULL,
-                CONSTRAINT fk_note
-                  FOREIGN KEY (note_id)
-                  REFERENCES note(id)
-                  ON DELETE CASCADE
+                tag_name TEXT NOT NULL UNIQUE,
+                tag_color TEXT NOT NULL
             )`
         );
 
@@ -66,9 +56,9 @@ class DatabaseInitialization {
                 color TEXT,
                 isFavorite INTEGER NOT NULL,
                 isFixed INTEGER NOT NULL,
-                date_reminder TEXT,
-                date_update TEXT NOT NULL,
-                date_register TEXT NOT NULL,
+                date_reminder INTEGER,
+                date_update INTEGER NOT NULL,
+                date_register INTEGER NOT NULL,
                 isDelete INTEGER NOT NULL DEFAULT 0
             )`
         );

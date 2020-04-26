@@ -15,15 +15,17 @@ export class MNote {
     public dateUpdate: Date;
     public dateRegister: Date;
     public isDelete: boolean;
-    public complements: MNoteComplement[];
+    public image: string | null;
+    public video: string | null;
+    public audio: string | null;
 
-    constructor(note: INote, complements: MNoteComplement[] = []) {
+    constructor(note: INote) {
         this.noteId = note.id;
         this.title = note.title;
         this.message = note.message;
         this.tag = note.tag_id ? {
-            color: note.tagColor,
-            name: note.tagName,
+            color: note.tag_color,
+            name: note.tag_name,
             tagId: note.tag_id,
         } : null;
         this.color = note.color;
@@ -33,7 +35,9 @@ export class MNote {
         this.dateUpdate = new Date(note.date_update);
         this.dateRegister = new Date(note.date_register);
         this.isDelete = note.isDelete ? true : false;
-        this.complements = complements;
+        this.image = note.image;
+        this.video = note.video;
+        this.audio = note.audio;
     }
 }
 
@@ -44,11 +48,14 @@ export interface INote {
     color: stringOrNull,
     isFavorite: 0 | 1,
     isFixed: 0 | 1,
-    date_reminder: string | null,
-    date_update: string,
-    date_register: string,
+    date_reminder: number | null,
+    date_update: number,
+    date_register: number,
     tag_id: number,
-    tagName: string,
-    tagColor: string,
-    isDelete: number
+    tag_name: string,
+    tag_color: string,
+    isDelete: number,
+    audio: string | null,
+    image: string | null,
+    video: string | null
 }

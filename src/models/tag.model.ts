@@ -6,13 +6,13 @@ export class MTag {
 
     constructor(tag: ITag) {
         this.tagId = tag.tag_id;
-        this.name = tag.name;
-        this.color = tag.color;
+        this.name = tag.tag_name;
+        this.color = tag.tag_color;
     }
 }
 
 export interface ITag {
     tag_id: number,
-    name: string,
-    color: string,
+    tag_name: string,
+    tag_color: string,
 }

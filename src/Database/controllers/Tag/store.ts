@@ -55,7 +55,7 @@ export const updateTag = ({
     tagId
 }: MTag): Promise<ResultSet> => {
     return Database.sentence(
-        `UPDATE ${tagTable} SET name = ?, color = ? WHERE tag_id = ?`,
+        `UPDATE ${tagTable} SET tag_name = ?, tag_color = ? WHERE tag_id = ?`,
         [name.toLowerCase(), color.toLowerCase(), tagId]
     );
 }
@@ -65,7 +65,7 @@ export const updateTag = ({
  */
 export const getAllTags = (): Promise<ResultSet> => {
     return Database.sentence(
-        `SELECT tag_id, name, color FROM ${tagTable} ORDER BY tag_id DESC`
+        `SELECT * FROM ${tagTable} ORDER BY tag_id DESC`
     );
 }
 
@@ -74,7 +74,7 @@ export const getAllTags = (): Promise<ResultSet> => {
  */
 export const createTag = (name: string, color: string): Promise<ResultSet> => {
     return Database.sentence(
-        `INSERT INTO ${tagTable} (name, color) VALUES(?, ?)`,
+        `INSERT INTO ${tagTable} (tag_name, tag_color) VALUES(?, ?)`,
         [name.toLowerCase(), color.toLowerCase()]
     );
 }

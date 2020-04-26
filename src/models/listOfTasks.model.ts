@@ -3,7 +3,7 @@ import { MTag } from "./tag.model";
 
 type stringOrNull = string | null;
 
-export class MThingsToDo {
+export class MListOfTasks {
     public listId: number;
     public title: string;
     public tag: MTag;
@@ -16,7 +16,7 @@ export class MThingsToDo {
     public isDelete: boolean;
     public tasks: MTask[];
 
-    constructor(thingsToDo: IThingsToDo, tasks: ITask[] = []) {
+    constructor(thingsToDo: IListOfTasks, tasks: ITask[] = []) {
         this.listId = thingsToDo.list_id;
         this.title = thingsToDo.title;
         this.tag = {
@@ -35,7 +35,7 @@ export class MThingsToDo {
     }
 }
 
-export interface IThingsToDo {
+export interface IListOfTasks {
     list_id: number,
     title: string,
     tag: stringOrNull,
