@@ -30,60 +30,60 @@ const ListOfNotesComponent: FC<IProps> = ({
     return txt;
   };
 
-  const cardNote = ({item, index}: {item: MNote; index: number}) => {
-    const media = arrayToObject(item.complements, 'type');
-
+  const cardNote = ({item, index}: {item: string | any; index: number}) => {
     return (
       <TouchableOpacity
         style={[
           styles.containerItem,
           {
             marginTop: index === 0 ? 10 : 0,
-            borderBottomColor: item.color || '#BEBEBE',
-            borderBottomWidth: item.color ? 3 : 0,
+            borderBottomColor: notes[item].color || '#BEBEBE',
+            borderBottomWidth: notes[item].color ? 3 : 0,
           },
         ]}
-        onPress={() => navigation.navigate('RegisterNote', {item, index})}>
-        {media.Image && (
+        onPress={() =>
+          navigation.navigate('RegisterNote', {item: notes[item], index: item})
+        }>
+        {notes[item].image && (
           <Image
             style={styles.image}
-            source={{uri: 'file://' + media.Image.path}}
+            source={{uri: 'file://' + notes[item].image}}
           />
         )}
         <View style={styles.info}>
-          <Text style={styles.title}>{item.title}</Text>
-          {item.message !== '' && (
-            <Text style={styles.noteText}>{cutText(item.message)}</Text>
+          <Text style={styles.title}>{notes[item].title}</Text>
+          {notes[item].message !== '' && (
+            <Text style={styles.noteText}>{cutText(notes[item].message)}</Text>
           )}
 
           <View style={styles.icons}>
             <View style={styles.icon}>
-              {media.Audio && (
+              {notes[item].audio && (
                 <AntDesign
                   style={{marginRight: 10}}
                   name="sound"
                   size={15}
-                  color={item.color || '#BEBEBE'}
+                  color={notes[item].color || '#BEBEBE'}
                 />
               )}
-              {item.dateReminder && (
+              {notes[item].dateReminder && (
                 <AntDesign
                   name="clockcircleo"
                   size={15}
-                  color={item.color || '#BEBEBE'}
+                  color={notes[item].color || '#BEBEBE'}
                 />
               )}
             </View>
             <View style={styles.icon}>
-              {item.isFavorite && (
+              {notes[item].isFavorite && (
                 <AntDesign name="star" size={15} color={'#FFEF00'} />
               )}
-              {item.color && (
+              {(notes[item].color || notes[item].isFixed) && (
                 <AntDesign
                   style={{marginLeft: 10}}
                   name="pushpino"
                   size={15}
-                  color={item.color}
+                  color={notes[item].color || '#BEBEBE'}
                 />
               )}
             </View>
@@ -103,17 +103,21 @@ const ListOfNotesComponent: FC<IProps> = ({
         }}>
         <FlatList
           style={{marginHorizontal: 5}}
-          data={notes.filter((item, index) => (index % 2 ? false : true))}
+          data={Object.keys(notes).filter((item, index) =>
+            index % 2 ? false : true,
+          )}
           renderItem={(item) => cardNote(item)}
           scrollEnabled={false}
-          keyExtractor={(item) => item.noteId.toString()}
+          keyExtractor={(item) => item.toString()}
         />
         <FlatList
           style={{marginHorizontal: 5}}
-          data={notes.filter((item, index) => (index % 2 ? true : false))}
+          data={Object.keys(notes).filter((item, index) =>
+            index % 2 ? true : false,
+          )}
           renderItem={(item) => cardNote(item)}
           scrollEnabled={false}
-          keyExtractor={(item) => item.noteId.toString()}
+          keyExtractor={(item) => item.toString()}
         />
       </View>
     </ScrollView>

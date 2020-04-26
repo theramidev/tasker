@@ -4,6 +4,7 @@ import fs, {stat} from 'react-native-fs';
 import notesTypes from '../types/notesTypes';
 import NoteController from '../../Database/controllers/Note';
 import {MNote} from 'src/models/note.model';
+import { arrayToObject } from '../../utils/arrayToObject';
 
 /**
  * @description se obtienen las notas de la base de datos
@@ -15,11 +16,11 @@ export const getAllNotes = () => async (dispatch: Dispatch) => {
     });
 
     const notes = await NoteController.getAllNotes();
-    console.log(notes);
+    const objNotes = arrayToObject(notes, 'noteId');
 
     dispatch({
       type: notesTypes.updateNotes,
-      payload: notes,
+      payload: objNotes,
     });
   } catch (err) {
     console.log(err);
@@ -62,12 +63,6 @@ export const registerNote = (note: any) => async (
     } = note;
     const {notes} = getState().notesReducer;
 
-    const complements: any[] = [
-      {path: image, type: 'Image'},
-      {path: audio, type: 'Audio'},
-      {path: video, type: 'Video'},
-    ].filter(({path}) => path !== null);
-
     const noteId = await NoteController.createNote({
       title,
       message,
@@ -76,13 +71,14 @@ export const registerNote = (note: any) => async (
       dateReminder,
       isFavorite,
       isFixed,
-      complements,
+      image,
+      audio,
+      video,
     });
 
     const newNote: MNote = {
       noteId,
       color,
-      complements,
       dateRegister: new Date(),
       dateUpdate: new Date(),
       dateReminder,
@@ -92,11 +88,14 @@ export const registerNote = (note: any) => async (
       message,
       tag,
       isDelete: false,
+      image,
+      audio,
+      video,
     };
 
     dispatch({
       type: notesTypes.updateNotes,
-      payload: [...notes, newNote],
+      payload: {...notes, [noteId]: newNote},
     });
   } catch (err) {
     console.log(err);
@@ -117,7 +116,7 @@ export const registerNote = (note: any) => async (
  * @param note 
  * @param index 
  */
-export const updateNote = (note: any, noteComplements: any, index: number) => async (
+export const updateNote = (note: any, index: number) => async (
   dispatch: Dispatch,
   getState: any,
 ) => {
@@ -125,8 +124,9 @@ export const updateNote = (note: any, noteComplements: any, index: number) => as
     dispatch({
       type: notesTypes.loadingUpdateNote,
     });
-
+    
     const {notes} = getState().notesReducer;
+
     const {
       headerColor: color,
       title,
@@ -140,44 +140,34 @@ export const updateNote = (note: any, noteComplements: any, index: number) => as
       video,
     } = note;
 
-    const complements: any[] = [
-      {path: image, type: 'Image'},
-      {path: audio, type: 'Audio'},
-      {path: video, type: 'Video'},
-    ].filter(({path}) => path !== null);
-
+    const oldDataNote: MNote = notes[index];
     const noteUpdated: MNote = {
-      ...notes[index],
+      ...oldDataNote,
       color,
-      complements,
       dateReminder,
       isFavorite,
       isFixed,
       title,
       message,
       tag,
+      image,
+      audio,
+      video,
     }
-    console.log(noteUpdated);
     
-    return
     const noteUpdatedDB = await NoteController.updateNote(noteUpdated);
-
-    if (noteComplements.Image) {
-      if (noteComplements.Image.path !== image) {
-        await fs.unlink(noteComplements.Image.path);
-      }
+    //console.log(noteUpdatedDB);
+    
+    if (oldDataNote.image !== noteUpdatedDB.image) {
+      oldDataNote.image && await fs.unlink(oldDataNote.image);
     }
 
-    if (noteComplements.Video) {
-      if (noteComplements.Video.path !== image) {
-        await fs.unlink(noteComplements.Video.path);
-      }
+    if (oldDataNote.audio !== noteUpdatedDB.audio) {
+      oldDataNote.audio && await fs.unlink(oldDataNote.audio);
     }
 
-    if (noteComplements.Audio) {
-      if (noteComplements.Audio.path !== image) {
-        await fs.unlink(noteComplements.Audio.path);
-      }
+    if (oldDataNote.video !== noteUpdatedDB.video) {
+      oldDataNote.video && await fs.unlink(oldDataNote.video);
     }
     
     notes[index] = noteUpdatedDB;

@@ -9,12 +9,15 @@ const tagTable = 'tag';
 /**
  * @description Cambia el campo de eliminación
  */
-export const updateNoteDelete = (noteId: number, isDelete: boolean): Promise<ResultSet> => {
-    return Database.sentence(
-        `UPDATE ${noteTable} SET isDelete = ? WHERE id = ?`,
-        [isDelete ? 1 : 0, noteId]
-    );
-}
+export const updateNoteDelete = (
+  noteId: number,
+  isDelete: boolean,
+): Promise<ResultSet> => {
+  return Database.sentence(
+    `UPDATE ${noteTable} SET isDelete = ? WHERE id = ?`,
+    [isDelete ? 1 : 0, noteId],
+  );
+};
 
 /**
  * @description Elimina una nota de la base de datos
@@ -38,7 +41,7 @@ export const updateNote = ({
   audio,
   image,
   video,
-  isDelete
+  isDelete,
 }: MNote): Promise<ResultSet> => {
   return Database.sentence(
     `UPDATE ${noteTable} SET title = ?, message = ?, tag_id = ?, color = ?, date_reminder = ?, 
@@ -66,18 +69,18 @@ export const updateNote = ({
  * @description Obtiene una nota de la base de datos
  */
 export const getNoteById = (noteId: number): Promise<ResultSet> => {
-    return Database.sentence(
-        `SELECT * FROM ${noteTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag_id = b.tag_id WHERE id = ?`,
-        [noteId]
-    );
-}
+  return Database.sentence(
+    `SELECT * FROM ${noteTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag_id = b.tag_id WHERE id = ?`,
+    [noteId],
+  );
+};
 
 /**
  * @description Obtiene las notas de la base de datos
  */
 export const getAllNotes = (): Promise<ResultSet> => {
-    return Database.sentence(
-        `SELECT * FROM ${noteTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag_id = b.tag_id`,
+  return Database.sentence(
+    `SELECT * FROM ${noteTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag_id = b.tag_id`,
   );
 };
 
@@ -94,13 +97,26 @@ export const createNote = ({
   isFixed,
   audio,
   image,
-  video
+  video,
 }: noteCreateParam): Promise<ResultSet> => {
-    return Database.sentence(
-        `INSERT INTO ${noteTable} (title, message, tag_id, color, isFavorite, isFixed, 
+  return Database.sentence(
+    `INSERT INTO ${noteTable} (title, message, tag_id, color, isFavorite, isFixed, 
           date_reminder, date_update, date_register, isDelete, image, video, audio) 
           VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [title, message, tagId, color, isFavorite, isFixed, dateReminder, new Date().toDateString(), 
-          new Date().toDateString(), 0, image, video, audio]
-    );
-}
+    [
+      title,
+      message,
+      tagId,
+      color,
+      isFavorite,
+      isFixed,
+      dateReminder,
+      new Date().toDateString(),
+      new Date().toDateString(),
+      0,
+      image,
+      video,
+      audio,
+    ],
+  );
+};

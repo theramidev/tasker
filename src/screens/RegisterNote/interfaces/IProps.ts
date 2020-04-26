@@ -47,5 +47,5 @@ export interface IProps {
    * @param note
    * @param index
    */
-  updateNote(note: any, noteComplements: any, index: number): Promise<void>;
+  updateNote(note: any, index: number): Promise<void>;
 }

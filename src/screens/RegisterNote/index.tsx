@@ -9,6 +9,7 @@ import {
   Image,
   NativeSyntheticEvent,
   TextInputChangeEventData,
+  ToastAndroid,
 } from 'react-native';
 import Textarea from 'react-native-textarea';
 import {connect} from 'react-redux';
@@ -40,17 +41,12 @@ import {SelectTagModal} from './components/SelectTagModal';
 import {getTags} from '../../redux/actions/tagsActions';
 import {registerNote, updateNote} from '../../redux/actions/notesActions';
 import {MNote} from 'src/models/note.model';
-import {arrayToObject} from '../../utils/arrayToObject';
 
 class RegisterNoteScreen extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
     const note: MNote = this.props.navigation.getParam('item');
-    let noteComplements = null;
-    if (note) {
-      noteComplements = arrayToObject(note.complements, 'type');
-    }
 
     this.state = {
       openModalColors: false,
@@ -66,21 +62,9 @@ class RegisterNoteScreen extends Component<IProps, IState> {
       fixed: note ? note.isFixed : false,
       tag: note ? note.tag : null,
       dateNote: note ? note.dateReminder : null,
-      audioNote: noteComplements
-        ? noteComplements.Audio
-          ? noteComplements.Audio.path
-          : null
-        : null,
-      imageNote: noteComplements
-        ? noteComplements.Image
-          ? noteComplements.Image.path
-          : null
-        : null,
-      videoNote: noteComplements
-        ? noteComplements.Video
-          ? noteComplements.Video.path
-          : null
-        : null,
+      audioNote: note ? note.audio : null,
+      imageNote: note ? note.image : null,
+      videoNote: note ? note.video : null,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -161,6 +145,11 @@ class RegisterNoteScreen extends Component<IProps, IState> {
     let audio = audioNote;
     let video = videoNote;
 
+    if (!title) {
+      ToastAndroid.show('El titulo no puede estar vacio', 2.5);
+      return;
+    }
+
     if (image) {
       const pathImage = `${
         fs.ExternalDirectoryPath
@@ -188,7 +177,7 @@ class RegisterNoteScreen extends Component<IProps, IState> {
       video = pathVideo;
     }
 
-    this.props.registerNote({
+    await this.props.registerNote({
       title,
       message,
       headerColor,
@@ -200,19 +189,25 @@ class RegisterNoteScreen extends Component<IProps, IState> {
       video,
       audio,
     });
+
+    this.props.navigation.goBack();
   };
 
   updateNote = async () => {
     const note: MNote = this.props.navigation.getParam('item');
     const index: number = this.props.navigation.getParam('index');
-    const noteComplements = arrayToObject(note.complements, 'type');
 
-    const {audioNote, imageNote, videoNote} = this.state;
+    const {title, audioNote, imageNote, videoNote} = this.state;
     let image = imageNote;
     let audio = audioNote;
     let video = videoNote;
 
-    if (image) {
+    if (!title) {
+      ToastAndroid.show('El titulo no puede estar vacio', 2.5);
+      return;
+    }
+
+    if (image && image !== note.image) {
       const pathImage = `${
         fs.ExternalDirectoryPath
       }/images/image${new Date().getTime()}.jpg`;
@@ -221,7 +216,7 @@ class RegisterNoteScreen extends Component<IProps, IState> {
       image = pathImage;
     }
 
-    if (audio) {
+    if (audio && audio !== note.audio) {
       const pathAudio = `${
         fs.ExternalDirectoryPath
       }/audio/audio${new Date().getTime()}.ogg`;
@@ -230,7 +225,7 @@ class RegisterNoteScreen extends Component<IProps, IState> {
       audio = pathAudio;
     }
 
-    if (video) {
+    if (video && video !== note.video) {
       const pathVideo = `${
         fs.ExternalDirectoryPath
       }/videos/video${new Date().getTime()}.jpg`;
@@ -240,10 +235,11 @@ class RegisterNoteScreen extends Component<IProps, IState> {
     }
 
     await this.props.updateNote(
-      {...this.state, image, video, audio},
-      noteComplements,
+      {...this.state, noteId: note.noteId, image, video, audio},
       index,
     );
+
+    this.props.navigation.goBack();
   };
 
   render() {
