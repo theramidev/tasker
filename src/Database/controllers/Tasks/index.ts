@@ -14,6 +14,8 @@ import { createThingsToDoModel } from './model';
 import { MListOfTasks, IListOfTasks } from '../../../models/listOfTasks.model';
 import { ITask, MTask } from '../../../models/task.model';
 
+type Ttask = {isCompleted: boolean, text: string}
+
 class TaskController {
 
     /**
@@ -131,12 +133,12 @@ class TaskController {
         isFavorite = 0,
         isFixed = 0,
         dateReminder = null
-    }: createThingsToDoModel, tasksText: string[]): Promise<number> {
+    }: createThingsToDoModel, tasks: Ttask[]): Promise<number> {
         try {
             const { insertId } = await createList({title, tag, color, isFavorite, isFixed, dateReminder});
             
-            for (const task of tasksText) {
-                await createTask(task, insertId);
+            for (const task of tasks) {
+                await createTask(task.text, insertId, task.isCompleted);
             }
 
             return Promise.resolve(insertId);

@@ -14,8 +14,6 @@ export const ListOfTasks: FC<IProps> = ({
   const [newTasks, setNewTasks] = useState<Ttask[]>([]);
 
   const _onChangeTask = (text: string, isCompleted: boolean, index: number) => {
-    console.log({text, isCompleted, index});
-
     onChangeTask({text, isCompleted}, index);
   };
 

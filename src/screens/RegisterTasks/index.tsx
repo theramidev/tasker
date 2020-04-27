@@ -5,7 +5,9 @@ import {
   TouchableOpacity,
   NativeSyntheticEvent,
   TextInputChangeEventData,
+  ToastAndroid,
 } from 'react-native';
+import {connect} from 'react-redux';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -24,6 +26,7 @@ import {DateAlarm} from '../../components/DateAlarm';
 import {ListOfTasks} from './components/ListOfTasks';
 import {Ttask} from './components/ListOfTasks/IProps';
 import {ModalColors} from '../../components/ModalColors';
+import {registerTasks} from '../../redux/actions/tasksActions';
 
 class RegisterTasksScreen extends Component<IProps, IState> {
   constructor(props: IProps) {
@@ -57,6 +60,29 @@ class RegisterTasksScreen extends Component<IProps, IState> {
     this.setState({tasks: this.state.tasks});
   };
 
+  saveTasks = async () => {
+    const {
+      title,
+      tasks,
+    } = this.state;
+
+    if (!title) {
+      ToastAndroid.show('El titulo no puede estar vacio', 2.5);
+      return;
+    }
+
+    for (const task of tasks) {
+      if (!task || !task.text) {
+        ToastAndroid.show('las tareas no pueden estar vacias', 2.5);
+        return
+      }
+    }
+
+    await this.props.registerTasks(this.state);
+
+    this.props.navigation.goBack();
+  };
+
   render() {
     const {
       openModalColors,
@@ -67,6 +93,7 @@ class RegisterTasksScreen extends Component<IProps, IState> {
       tasks,
       openModalDate,
     } = this.state;
+    const headerColor = colorFixed || theme().primary;
     return (
       <Layout>
         <Header
@@ -76,6 +103,7 @@ class RegisterTasksScreen extends Component<IProps, IState> {
           iconName="note-add"
           textIcon="Guardar"
           backgroundColor={colorFixed || undefined}
+          onPress={this.saveTasks}
         />
 
         <View style={styles.optionsHeader}>
@@ -104,7 +132,7 @@ class RegisterTasksScreen extends Component<IProps, IState> {
             onPress={() => this.setState({isFixed: !isFixed})}
             style={[
               styles.optionHeader,
-              {backgroundColor: colorFixed || '#E3E3E3'},
+              {backgroundColor: isFixed ? headerColor : '#E3E3E3'},
             ]}>
             <AntDesign
               name="pushpino"
@@ -162,7 +190,7 @@ class RegisterTasksScreen extends Component<IProps, IState> {
 
         {/* Modal de alarma */}
         <DateTimeModal
-          show={this.state.openModalDate}
+          show={openModalDate}
           onClose={() => {
             this.setState({openModalDate: false});
           }}
@@ -181,4 +209,17 @@ class RegisterTasksScreen extends Component<IProps, IState> {
   }
 }
 
-export default RegisterTasksScreen;
+const mapStateToProps = ({tasksReducer}: any) => {
+  return {
+    tasksReducer,
+  };
+};
+
+const mapDispatchToProps = {
+  registerTasks,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(RegisterTasksScreen);

@@ -2,4 +2,6 @@ import { NavigationScreenProp, NavigationState, NavigationParams } from "react-n
 
 export interface IProps {
     navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+
+    registerTasks(task: any): Promise<void>;
 }
