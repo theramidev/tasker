@@ -16,7 +16,7 @@ export class MListOfTasks {
     public isDelete: boolean;
     public tasks: MTask[];
 
-    constructor(thingsToDo: IListOfTasks, tasks: ITask[] = []) {
+    constructor(thingsToDo: IListOfTasks) {
         this.listId = thingsToDo.list_id;
         this.title = thingsToDo.title;
         this.tag = {
@@ -31,7 +31,7 @@ export class MListOfTasks {
         this.dateUpdate = new Date(thingsToDo.date_update);
         this.dateRegister = new Date(thingsToDo.date_register);
         this.isDelete = thingsToDo.isDelete ? true : false;
-        this.tasks = tasks.map(task => new MTask(task));
+        this.tasks = thingsToDo.tasks.map(task => new MTask(task));
     }
 }
 
@@ -48,5 +48,6 @@ export interface IListOfTasks {
     tag_id: number,
     tagName: string,
     tagColor: string,
-    isDelete: number
+    isDelete: number,
+    tasks: ITask[]
 }

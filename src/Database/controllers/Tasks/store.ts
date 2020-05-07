@@ -107,8 +107,11 @@ export const getTaskByList = (listId: number): Promise<ResultSet> => {
 export const getAllLists = (): Promise<ResultSet> => {
   return Database.sentence(
     `SELECT a.list_id, a.title, a.color, a.isFavorite, a.isFixed, a.date_reminder, a.isDelete,
-        a.date_update, a.date_register, b.tag_id, b.name AS tagName, b.color AS tagColor 
-        FROM ${listTable} AS a LEFT JOIN ${tagTable} AS b ON a.tag = b.tag_id`,
+        a.date_update, a.date_register, b.tag_id, b.tag_name AS tagName, b.tag_color AS tagColor, 
+        c.text, c.task_id, c.isCompleted
+        FROM ${listTable} AS a
+        LEFT JOIN ${tagTable} AS b ON a.tag = b.tag_id
+        INNER JOIN ${taskTable} AS c ON a.list_id = c.list_id`,
   );
 };
 

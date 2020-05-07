@@ -1,19 +1,20 @@
 import {Dispatch} from 'redux';
 import TaskController from '../../Database/controllers/Tasks';
 import tasksTypes from '../types/tasksTypes';
+import {arrayToObject} from '../../utils/arrayToObject';
 
 /**
  * @description obtiene todos los tasks de la base de datos
  */
-export const getTasks = () => (dispatch: Dispatch) => {
+export const getTasks = () => async (dispatch: Dispatch) => {
   try {
     dispatch({
       type: tasksTypes.loadingRegisterTask,
     });
 
-    const tasks = TaskController.getAllListsOfTasks();
-
-    dispatch({
+    let tasks = await TaskController.getAllListsOfTasks();
+    
+    dispatch({ 
       type: tasksTypes.updateTasks,
       payload: tasks,
     });

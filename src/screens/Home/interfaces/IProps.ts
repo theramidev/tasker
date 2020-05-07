@@ -25,4 +25,9 @@ export interface IProps {
    * @description se obtienen las notas de la base de datos
    */
   getAllNotes(): Promise<void>;
+
+  /**
+   * @description se obtienen las tareas de la base de datos
+   */
+  getTasks(): Promise<void>;
 }

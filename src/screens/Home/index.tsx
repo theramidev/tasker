@@ -10,10 +10,12 @@ import {Layout} from '../../components/Layout';
 import {Header} from '../../components/Header';
 import {Tabs} from './components/Tabs';
 import {getAllNotes} from '../../redux/actions/notesActions';
+import {getTasks} from '../../redux/actions/tasksActions';
 
 class HomeScreen extends Component<IProps, IState> {
   async componentDidMount() {
     this.props.getAllNotes();
+    this.props.getTasks();
     
   }
 
@@ -63,6 +65,7 @@ const mapStateToProps = ({notesReducer}: any) => {
 
 const mapDispatchToProps = {
   getAllNotes,
+  getTasks,
 };
 
 export default connect<any, any>(

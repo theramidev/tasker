@@ -1,13 +1,16 @@
 import tasksTypes from '../types/tasksTypes';
 
 const INITIAL_STATE = {
-  tasks: [],
+  tasks: {},
 
   loadingGetTasks: false,
   errorGetTasks: null,
 
   loadingRegisterTask: false,
   errorRegisterTask: null,
+
+  loadingUpdateTask: false,
+  errorUpdateTask: null,
 };
 
 export default (state = INITIAL_STATE, {type, payload}: any) => {
