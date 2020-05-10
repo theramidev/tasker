@@ -9,18 +9,7 @@ import {MListOfTasks} from 'src/models/listOfTasks.model';
 export interface IProps {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 
-  getTasks(): Promise<void>;
-
-  tasksReducer: {
-    tasks: MListOfTasks[];
-
-    loadingGetTasks: boolean;
-    errorGetTasks: null | any;
-
-    loadingRegisterTask: boolean;
-    errorRegisterTask: null | any;
-
-    loadingUpdateTask: boolean;
-    errorUpdateTask: null | any;
-  };
+  tasks: MListOfTasks[];
+  item: string | any;
+  index: number;
 }

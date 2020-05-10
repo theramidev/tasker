@@ -155,7 +155,7 @@ class TaskController {
       Object.keys(listOfTasks).forEach((value: string) => {
         listOfTasks[value].forEach((data: any) => {
           listOfTasks[value][0].tasks.push({
-            id: data.task_id,
+            task_id: data.task_id,
             text: data.text,
             isCompleted: data.isCompleted,
           });
@@ -167,11 +167,6 @@ class TaskController {
 
         listOfTasks[value] = new MListOfTasks(listOfTasks[value][0]);
       });
-
-      /* const ListsOfTasks: MListOfTasks[] = await Promise.all(listOfTasksResult.map(async (list) => {
-                const tasks: ITask[] = (await getTaskByList(list.list_id)).rows.raw();
-                return new MListOfTasks(list, tasks);
-            })); */
 
       return Promise.resolve(listOfTasks);
     } catch (error) {

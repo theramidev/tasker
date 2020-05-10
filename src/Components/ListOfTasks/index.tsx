@@ -1,55 +1,15 @@
-import React, {FC, useEffect} from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  RecyclerViewBackedScrollView,
-} from 'react-native';
+import React, {FC, useEffect, useRef, useState} from 'react';
+import {View, FlatList, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 
-import AntDesign from 'react-native-vector-icons/AntDesign';
-
-import {styles} from './styles';
 import {IProps} from './IProps';
+
+import {CardTaks} from '../CardTaks';
 
 const ListOfTasksComponent: FC<IProps> = ({
   navigation,
   tasksReducer: {tasks},
 }) => {
-
-  useEffect(() => {
-    console.log(tasks);
-  }, [tasks])
-
-  const cutText = (txt: string) => {
-    if (txt.length > 100) {
-      return txt.substr(0, 100) + '...';
-    }
-
-    return txt;
-  };
-
-  const cardNote = ({item, index}: {item: string | any; index: number}) => {
-    return (
-      <TouchableOpacity
-        /* style={[
-          styles.containerItem,
-          {
-            marginTop: index === 0 ? 10 : 0,
-            borderBottomColor: notes[item].color || '#BEBEBE',
-            borderBottomWidth: notes[item].color ? 3 : 0,
-          },
-        ]}
-        onPress={() =>
-          navigation.navigate('RegisterNote', {item: notes[item], index: item})
-        } */>
-      </TouchableOpacity>
-    );
-  };
-
   return (
     <ScrollView style={{marginBottom: 90}}>
       <View
@@ -60,19 +20,15 @@ const ListOfTasksComponent: FC<IProps> = ({
         }}>
         <FlatList
           style={{marginHorizontal: 5}}
-          data={Object.keys(tasks).filter((item, index) =>
-            index % 2 ? false : true,
+          data={Object.keys(tasks)}
+          renderItem={({item, index}) => (
+            <CardTaks
+              navigation={navigation}
+              tasks={tasks}
+              item={item}
+              index={index}
+            />
           )}
-          renderItem={(item) => cardNote(item)}
-          scrollEnabled={false}
-          keyExtractor={(item) => item.toString()}
-        />
-        <FlatList
-          style={{marginHorizontal: 5}}
-          data={Object.keys(tasks).filter((item, index) =>
-            index % 2 ? true : false,
-          )}
-          renderItem={(item) => cardNote(item)}
           scrollEnabled={false}
           keyExtractor={(item) => item.toString()}
         />
@@ -87,10 +43,9 @@ const mapStateToProps = ({tasksReducer}: any) => {
   };
 };
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 
-export const ListOfNotes = connect(
+export const ListOfTasks = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(ListOfTasksComponent);
